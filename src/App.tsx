@@ -9,9 +9,6 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { ThemeProvider } from "./context/ThemeProvider";
 
-// Auth pages
-import LoginPage from "./pages/LoginPage";
-
 // App pages
 import Dashboard from "./pages/Dashboard";
 import MoodTrackerPage from "./pages/MoodTrackerPage";
@@ -49,16 +46,9 @@ const App = () => (
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            <Routes>
-              {/* Auth Routes */}
-              <Route path="/login" element={<LoginPage />} />
-              
-              {/* Protected App Routes */}
-              <Route element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }>
+            <Routes>              
+              {/* App Routes (no longer protected) */}
+              <Route element={<AppLayout />}>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/mood" element={<MoodTrackerPage />} />
                 <Route path="/habits" element={<HabitsPage />} />
