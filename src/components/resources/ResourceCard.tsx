@@ -56,8 +56,9 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
   const ResourceIcon = getResourceIcon(resource.type);
   const CategoryIcon = getCategoryIcon(resource.category);
   
-  // Check if link is internal (starts with /) or external
+  // Check if link is internal (starts with /) and properly format it
   const isInternalLink = resource.link && resource.link.startsWith('/');
+  const formattedLink = isInternalLink ? `/app${resource.link}` : resource.link;
   
   return (
     <Card key={resource.id} className="overflow-hidden">
@@ -116,7 +117,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
         {resource.link && (
           isInternalLink ? (
             <Button variant="outline" className="w-full" asChild>
-              <Link to={resource.link}>
+              <Link to={formattedLink}>
                 Access Resource
                 <ExternalLink className="ml-2 h-4 w-4" />
               </Link>

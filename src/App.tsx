@@ -54,29 +54,31 @@ const App = () => (
               <Route path="/" element={<LoginPage />} />
               
               {/* App Routes (Protected) */}
-              <Route path="/app" element={
+              <Route element={
                 <ProtectedRoute>
                   <AppLayout />
                 </ProtectedRoute>
               }>
-                <Route index element={<Dashboard />} />
-                <Route path="mood" element={<MoodTrackerPage />} />
-                <Route path="habits" element={<HabitsPage />} />
-                <Route path="resources" element={<ResourcesPage />} />
-                <Route path="resources/managing-exam-stress" element={<ManagingExamStressPage />} />
-                <Route path="resources/mindful-meditation" element={<MindfulMeditationPage />} />
-                <Route path="resources/sleep-habits" element={<SleepHabitsPage />} />
-                <Route path="resources/breathing-exercise" element={<BreathingExercisePage />} />
-                <Route path="resources/stress-management" element={<StressManagementPage />} />
-                <Route path="resources/brain-foods" element={<BrainFoodsPage />} />
-                <Route path="resources/better-sleep" element={<SleepHabitsPage />} />
-                <Route path="journal" element={<JournalPage />} />
-                <Route path="analytics" element={<AnalyticsPage />} />
-                <Route path="chat" element={<ChatPage />} />
-                <Route path="achievements" element={<AchievementsPage />} />
-                <Route path="notifications" element={<NotificationsPage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route path="profile" element={<ProfilePage />} />
+                <Route path="/app" element={<Dashboard />} />
+                <Route path="/app/mood" element={<MoodTrackerPage />} />
+                <Route path="/app/habits" element={<HabitsPage />} />
+                <Route path="/app/journal" element={<JournalPage />} />
+                <Route path="/app/analytics" element={<AnalyticsPage />} />
+                <Route path="/app/chat" element={<ChatPage />} />
+                <Route path="/app/achievements" element={<AchievementsPage />} />
+                <Route path="/app/notifications" element={<NotificationsPage />} />
+                <Route path="/app/settings" element={<SettingsPage />} />
+                <Route path="/app/profile" element={<ProfilePage />} />
+                
+                {/* Resources and nested resource routes */}
+                <Route path="/app/resources" element={<ResourcesPage />} />
+                <Route path="/app/resources/managing-exam-stress" element={<ManagingExamStressPage />} />
+                <Route path="/app/resources/mindful-meditation" element={<MindfulMeditationPage />} />
+                <Route path="/app/resources/sleep-habits" element={<SleepHabitsPage />} />
+                <Route path="/app/resources/breathing-exercise" element={<BreathingExercisePage />} />
+                <Route path="/app/resources/stress-management" element={<StressManagementPage />} />
+                <Route path="/app/resources/brain-foods" element={<BrainFoodsPage />} />
+                <Route path="/app/resources/better-sleep" element={<SleepHabitsPage />} />
               </Route>
               
               {/* Catch-all route */}

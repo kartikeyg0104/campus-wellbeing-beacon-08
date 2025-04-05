@@ -37,7 +37,7 @@ const recommendations: Recommendation[] = [
     description: 'Take a quick break to reset with this guided breathing exercise.',
     icon: Brain,
     actionLabel: 'Start Exercise',
-    actionUrl: '/resources/breathing-exercise'
+    actionUrl: '/app/resources/breathing-exercise'
   },
   {
     id: 2,
@@ -46,7 +46,7 @@ const recommendations: Recommendation[] = [
     description: 'Learn effective techniques to manage exam stress and anxiety.',
     icon: Heart,
     actionLabel: 'View Techniques',
-    actionUrl: '/resources/stress-management'
+    actionUrl: '/app/resources/stress-management'
   },
   {
     id: 3,
@@ -55,7 +55,7 @@ const recommendations: Recommendation[] = [
     description: 'Foods that improve focus, memory, and cognitive function.',
     icon: Utensils,
     actionLabel: 'Explore Foods',
-    actionUrl: '/resources/brain-foods'
+    actionUrl: '/app/resources/brain-foods'
   },
   {
     id: 4,
@@ -64,7 +64,7 @@ const recommendations: Recommendation[] = [
     description: 'Improve your sleep quality with these evidence-based tips.',
     icon: Moon,
     actionLabel: 'Read Guide',
-    actionUrl: '/resources/better-sleep'
+    actionUrl: '/app/resources/better-sleep'
   }
 ];
 

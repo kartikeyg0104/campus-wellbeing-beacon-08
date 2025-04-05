@@ -25,17 +25,17 @@ import {
 import { cn } from '@/lib/utils';
 
 const mainMenuItems = [
-  { title: 'Dashboard', icon: Home, path: '/' },
-  { title: 'Mood Tracker', icon: Activity, path: '/mood' },
-  { title: 'Habits', icon: Calendar, path: '/habits' },
-  { title: 'Analytics', icon: BarChart2, path: '/analytics' },
+  { title: 'Dashboard', icon: Home, path: '/app' },
+  { title: 'Mood Tracker', icon: Activity, path: '/app/mood' },
+  { title: 'Habits', icon: Calendar, path: '/app/habits' },
+  { title: 'Analytics', icon: BarChart2, path: '/app/analytics' },
 ];
 
 const resourcesMenuItems = [
-  { title: 'Journal', icon: Book, path: '/journal' },
-  { title: 'Resources', icon: Lightbulb, path: '/resources' },
-  { title: 'Chat Support', icon: MessageSquare, path: '/chat' },
-  { title: 'Achievements', icon: Medal, path: '/achievements' },
+  { title: 'Journal', icon: Book, path: '/app/journal' },
+  { title: 'Resources', icon: Lightbulb, path: '/app/resources' },
+  { title: 'Chat Support', icon: MessageSquare, path: '/app/chat' },
+  { title: 'Achievements', icon: Medal, path: '/app/achievements' },
 ];
 
 export function AppSidebar() {
