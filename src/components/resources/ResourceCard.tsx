@@ -27,6 +27,7 @@ import {
   ExternalLink 
 } from 'lucide-react';
 import { Resource } from '@/types/resource';
+import { Link } from 'react-router-dom';
 
 const getResourceIcon = (type: Resource['type']) => {
   switch (type) {
@@ -54,6 +55,9 @@ interface ResourceCardProps {
 export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
   const ResourceIcon = getResourceIcon(resource.type);
   const CategoryIcon = getCategoryIcon(resource.category);
+  
+  // Check if link is internal (starts with /) or external
+  const isInternalLink = resource.link && resource.link.startsWith('/');
   
   return (
     <Card key={resource.id} className="overflow-hidden">
@@ -110,12 +114,19 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({ resource }) => {
       </CardContent>
       <CardFooter>
         {resource.link && (
-          <Button variant="outline" className="w-full" asChild>
-            <a href={resource.link} target="_blank" rel="noopener noreferrer">
-              Access Resource
+          isInternalLink ? (
+            <Button variant="outline" className="w-full" asChild>
+              <Link to={resource.link}>
+                Access Resource
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          ) : (
+            <Button variant="outline" className="w-full" onClick={() => window.open(resource.link, '_blank', 'noopener,noreferrer')}>
+              View Resource
               <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
-          </Button>
+            </Button>
+          )
         )}
       </CardFooter>
     </Card>
