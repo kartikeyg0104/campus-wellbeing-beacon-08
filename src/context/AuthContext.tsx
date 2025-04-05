@@ -44,8 +44,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       
       // Accept any email/password combination for demo purposes
       if (password.length > 0) {
+        // Generate a proper UUID for the user ID instead of using a timestamp
+        const userId = crypto.randomUUID();
+        
         const userData = {
-          id: Date.now().toString(),
+          id: userId,
           name: name,
           email: email,
           role: "student"
@@ -59,7 +62,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           await supabase
             .from('profiles')
             .upsert({
-              id: userData.id,
+              id: userId,
               name: name,
               email: email,
               updated_at: new Date().toISOString()
