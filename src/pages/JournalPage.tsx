@@ -367,121 +367,121 @@ const JournalPage: React.FC = () => {
               <span className="hidden sm:inline">Insights</span>
             </TabsTrigger>
           </TabsList>
-        </Tabs>
-      </div>
-
-      <TabsContent value="entries" className="mt-0 space-y-4">
-        {filteredEntries.length > 0 ? (
-          filteredEntries.map(entry => (
-            <Card key={entry.id} className="overflow-hidden">
-              <div className={`h-1 ${
-                entry.mood === 'Happy' || entry.mood === 'Content' || entry.mood === 'Satisfied' || entry.mood === 'Energetic'
-                  ? 'bg-green-500'
-                  : entry.mood === 'Stressed' || entry.mood === 'Anxious' || entry.mood === 'Frustrated'
-                    ? 'bg-red-500'
-                    : entry.mood === 'Sad' || entry.mood === 'Tired'
-                      ? 'bg-blue-500'
-                      : 'bg-yellow-500'
-              }`} />
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle>{entry.title}</CardTitle>
-                    <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">
-                      <div className="flex items-center">
-                        <Calendar size={14} className="mr-1" />
-                        {formatDate(entry.date)}
+        
+          <TabsContent value="entries" className="mt-0 space-y-4">
+            {filteredEntries.length > 0 ? (
+              filteredEntries.map(entry => (
+                <Card key={entry.id} className="overflow-hidden">
+                  <div className={`h-1 ${
+                    entry.mood === 'Happy' || entry.mood === 'Content' || entry.mood === 'Satisfied' || entry.mood === 'Energetic'
+                      ? 'bg-green-500'
+                      : entry.mood === 'Stressed' || entry.mood === 'Anxious' || entry.mood === 'Frustrated'
+                        ? 'bg-red-500'
+                        : entry.mood === 'Sad' || entry.mood === 'Tired'
+                          ? 'bg-blue-500'
+                          : 'bg-yellow-500'
+                  }`} />
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <CardTitle>{entry.title}</CardTitle>
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-sm text-muted-foreground">
+                          <div className="flex items-center">
+                            <Calendar size={14} className="mr-1" />
+                            {formatDate(entry.date)}
+                          </div>
+                          {entry.mood && (
+                            <div className="flex items-center">
+                              <Clock size={14} className="mr-1" />
+                              Mood: {entry.mood}
+                            </div>
+                          )}
+                          {entry.category && (
+                            <div className="flex items-center">
+                              <ListFilter size={14} className="mr-1" />
+                              {entry.category}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                      {entry.mood && (
-                        <div className="flex items-center">
-                          <Clock size={14} className="mr-1" />
-                          Mood: {entry.mood}
-                        </div>
-                      )}
-                      {entry.category && (
-                        <div className="flex items-center">
-                          <ListFilter size={14} className="mr-1" />
-                          {entry.category}
-                        </div>
-                      )}
+                      <div className="flex space-x-2">
+                        <Button variant="ghost" size="icon" onClick={() => handleEditEntry(entry)}>
+                          <Edit size={16} />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => handleDeleteEntry(entry.id)}>
+                          <Trash2 size={16} />
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex space-x-2">
-                    <Button variant="ghost" size="icon" onClick={() => handleEditEntry(entry)}>
-                      <Edit size={16} />
-                    </Button>
-                    <Button variant="ghost" size="icon" onClick={() => handleDeleteEntry(entry.id)}>
-                      <Trash2 size={16} />
-                    </Button>
-                  </div>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="whitespace-pre-line">{entry.content}</p>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <div className="flex flex-col items-center justify-center py-12 text-center">
+                <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center mb-4">
+                  <PlusCircle className="h-10 w-10 text-muted-foreground" />
                 </div>
+                <h3 className="text-lg font-medium">No journal entries found</h3>
+                <p className="text-muted-foreground mt-1 max-w-md">
+                  {searchQuery ? 
+                    "No entries match your search. Try different keywords or clear your search." :
+                    "Start documenting your thoughts and experiences to track patterns and gain insights."
+                  }
+                </p>
+                {!searchQuery && (
+                  <Button onClick={handleNewEntry} className="mt-4">
+                    Create your first entry
+                  </Button>
+                )}
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="insights" className="mt-0">
+            <Card>
+              <CardHeader>
+                <CardTitle>Journal Insights</CardTitle>
+                <CardDescription>
+                  AI-generated patterns and observations based on your entries.
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="whitespace-pre-line">{entry.content}</p>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
-            <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center mb-4">
-              <PlusCircle className="h-10 w-10 text-muted-foreground" />
-            </div>
-            <h3 className="text-lg font-medium">No journal entries found</h3>
-            <p className="text-muted-foreground mt-1 max-w-md">
-              {searchQuery ? 
-                "No entries match your search. Try different keywords or clear your search." :
-                "Start documenting your thoughts and experiences to track patterns and gain insights."
-              }
-            </p>
-            {!searchQuery && (
-              <Button onClick={handleNewEntry} className="mt-4">
-                Create your first entry
-              </Button>
-            )}
-          </div>
-        )}
-      </TabsContent>
-
-      <TabsContent value="insights" className="mt-0">
-        <Card>
-          <CardHeader>
-            <CardTitle>Journal Insights</CardTitle>
-            <CardDescription>
-              AI-generated patterns and observations based on your entries.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-6">
-              {journalInsights.map((insight, index) => (
-                <div key={index} className="border rounded-lg p-4">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-primary/10 p-2 rounded-full text-primary mt-1">
-                      <Lightbulb size={20} />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-lg mb-1">{insight.title}</h3>
-                      <p className="text-muted-foreground">{insight.description}</p>
-                      <div className="flex items-center mt-2 text-xs text-muted-foreground">
-                        <ListFilter size={12} className="mr-1" />
-                        {insight.category} insight
+                <div className="space-y-6">
+                  {journalInsights.map((insight, index) => (
+                    <div key={index} className="border rounded-lg p-4">
+                      <div className="flex items-start gap-4">
+                        <div className="bg-primary/10 p-2 rounded-full text-primary mt-1">
+                          <Lightbulb size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-lg mb-1">{insight.title}</h3>
+                          <p className="text-muted-foreground">{insight.description}</p>
+                          <div className="flex items-center mt-2 text-xs text-muted-foreground">
+                            <ListFilter size={12} className="mr-1" />
+                            {insight.category} insight
+                          </div>
+                        </div>
                       </div>
+                    </div>
+                  ))}
+
+                  <div className="flex items-center justify-between p-4 border rounded-lg bg-muted/30">
+                    <div className="flex items-center gap-2">
+                      <Lock size={16} className="text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground">
+                        Your journal content is private and secure. AI insights are generated locally.
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))}
-
-              <div className="flex items-center justify-between p-4 border rounded-lg bg-muted/30">
-                <div className="flex items-center gap-2">
-                  <Lock size={16} className="text-muted-foreground" />
-                  <p className="text-sm text-muted-foreground">
-                    Your journal content is private and secure. AI insights are generated locally.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </TabsContent>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 };
