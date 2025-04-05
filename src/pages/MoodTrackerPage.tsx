@@ -30,6 +30,8 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  Bar,
+  BarChart as RechartsBarChart,
 } from 'recharts';
 
 // Sample mood history data
@@ -190,7 +192,7 @@ const MoodTrackerPage: React.FC = () => {
 
             <TabsContent value="timeOfDay" className="h-72">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart
+                <RechartsBarChart
                   data={timeOfDayData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
                 >
@@ -204,13 +206,12 @@ const MoodTrackerPage: React.FC = () => {
                       <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.4}/>
                     </linearGradient>
                   </defs>
-                  <Area 
-                    type="monotone" 
+                  <Bar 
                     dataKey="mood" 
                     fill="url(#barGradient)" 
                     name="Average Mood"
                   />
-                </BarChart>
+                </RechartsBarChart>
               </ResponsiveContainer>
             </TabsContent>
           </Tabs>

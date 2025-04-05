@@ -2,11 +2,11 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
-  SmilePlus, 
+  Laugh, 
   Smile, 
   Meh, 
   Frown, 
-  FrownPlus,
+  CloudRain,
   Calendar
 } from 'lucide-react';
 import {
@@ -21,11 +21,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 
 const moodOptions = [
-  { value: 5, label: 'Great', icon: SmilePlus, color: 'bg-green-100 hover:bg-green-200 text-green-600' },
+  { value: 5, label: 'Great', icon: Laugh, color: 'bg-green-100 hover:bg-green-200 text-green-600' },
   { value: 4, label: 'Good', icon: Smile, color: 'bg-emerald-100 hover:bg-emerald-200 text-emerald-600' },
   { value: 3, label: 'Okay', icon: Meh, color: 'bg-yellow-100 hover:bg-yellow-200 text-yellow-600' },
   { value: 2, label: 'Not Great', icon: Frown, color: 'bg-orange-100 hover:bg-orange-200 text-orange-600' },
-  { value: 1, label: 'Struggling', icon: FrownPlus, color: 'bg-red-100 hover:bg-red-200 text-red-600' },
+  { value: 1, label: 'Struggling', icon: CloudRain, color: 'bg-red-100 hover:bg-red-200 text-red-600' },
 ];
 
 export const MoodTracker: React.FC = () => {
