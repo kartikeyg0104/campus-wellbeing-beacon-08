@@ -14,6 +14,8 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import ChatPage from "./pages/ChatPage";
 import AchievementsPage from "./pages/AchievementsPage";
 import NotificationsPage from "./pages/NotificationsPage";
+import SettingsPage from "./pages/SettingsPage";
+import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -35,6 +37,8 @@ const App = () => (
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/achievements" element={<AchievementsPage />} />
             <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
