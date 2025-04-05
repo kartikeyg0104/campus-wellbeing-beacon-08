@@ -5,12 +5,15 @@ export interface ChatMessage {
 }
 
 export const useOpenAIApiKey = () => {
+  const [isValidating, setIsValidating] = React.useState(false);
+
   const getApiKey = () => {
     return localStorage.getItem('openai_api_key');
   };
 
   const validateAndSetApiKey = async (apiKey: string): Promise<boolean> => {
     try {
+      setIsValidating(true);
       // Make a small test request to validate the key
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -33,6 +36,8 @@ export const useOpenAIApiKey = () => {
     } catch (error) {
       console.error('Error validating OpenAI API key:', error);
       return false;
+    } finally {
+      setIsValidating(false);
     }
   };
 
@@ -41,7 +46,7 @@ export const useOpenAIApiKey = () => {
   return {
     apiKey: getApiKey(),
     validateAndSetApiKey,
-    isValidating: false,
+    isValidating,
     hasApiKey,
   };
 };

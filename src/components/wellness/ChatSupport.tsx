@@ -36,7 +36,6 @@ const INITIAL_MESSAGES: Message[] = [
   },
 ];
 
-// Context for the AI wellness assistant
 const SYSTEM_CONTEXT = `You are a wellness assistant for a campus wellness app. 
 Your responsibilities include:
 1. Intent Detection – Identify what the user is trying to do (e.g., book a meeting, ask a question, request help).
