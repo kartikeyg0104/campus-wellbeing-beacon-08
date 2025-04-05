@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ArrowRight, Bell, Clock, Calendar, Brain, Heart } from 'lucide-react';
+import { ChevronRight, ArrowRight, Bell, Clock, Calendar, Brain, Heart, MessageSquare } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Link } from 'react-router-dom';
