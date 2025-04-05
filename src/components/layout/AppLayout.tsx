@@ -64,12 +64,12 @@ export function AppLayout() {
                 </Badge>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/settings">
+                <Link to="/app/settings">
                   <Settings size={20} />
                 </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
-                <Link to="/profile">
+                <Link to="/app/profile">
                   <User size={20} />
                 </Link>
               </Button>

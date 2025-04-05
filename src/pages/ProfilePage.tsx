@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Medal, Calendar, Heart, BookOpen, BarChart2 } from 'lucide-react';
 import EditProfileDialog from '@/components/profile/EditProfileDialog';
+import { Link } from 'react-router-dom';
 
 interface ProfileData {
   name: string;
@@ -179,7 +180,7 @@ const ProfilePage: React.FC = () => {
             </CardContent>
             <CardFooter>
               <Button variant="outline" className="w-full" asChild>
-                <a href="/achievements">View All Achievements</a>
+                <Link to="/app/achievements">View All Achievements</Link>
               </Button>
             </CardFooter>
           </Card>
