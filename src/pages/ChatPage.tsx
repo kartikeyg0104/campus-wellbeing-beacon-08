@@ -8,7 +8,7 @@ const ChatPage: React.FC = () => {
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Chat Support</h1>
         <p className="text-muted-foreground">
-          Connect with our wellness team for personalized support.
+          Connect with our Gemini-powered AI wellness assistant for personalized support.
         </p>
       </div>
 
