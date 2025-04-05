@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -9,10 +8,11 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Settings, Bell, Lock, User, Shield, Moon, Sun } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import { useTheme } from '@/context/ThemeProvider';
 
 const SettingsPage: React.FC = () => {
   const { toast } = useToast();
-  const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
+  const { theme, setTheme } = useTheme();
   
   const saveSettings = () => {
     toast({

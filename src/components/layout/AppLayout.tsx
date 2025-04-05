@@ -3,14 +3,16 @@ import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
-import { User, Bell, Settings } from 'lucide-react';
+import { User, Bell, Settings, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
+import { useTheme } from '@/context/ThemeProvider';
 
 export function AppLayout() {
   const { toast } = useToast();
   const location = useLocation();
+  const { theme, setTheme } = useTheme();
   
   const showNotification = () => {
     toast({
@@ -20,6 +22,10 @@ export function AppLayout() {
   };
 
   const notificationCount = 3;
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <SidebarProvider>
@@ -33,6 +39,13 @@ export function AppLayout() {
               </h1>
             </div>
             <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={toggleTheme}
+              >
+                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              </Button>
               <Button 
                 variant="ghost" 
                 size="icon" 

@@ -20,6 +20,7 @@ import NotFound from "./pages/NotFound";
 import ManagingExamStressPage from "./pages/ManagingExamStressPage";
 import MindfulMeditationPage from "./pages/MindfulMeditationPage";
 import SleepHabitsPage from "./pages/SleepHabitsPage";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -32,31 +33,33 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/mood" element={<MoodTrackerPage />} />
-            <Route path="/habits" element={<HabitsPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/resources/managing-exam-stress" element={<ManagingExamStressPage />} />
-            <Route path="/resources/mindful-meditation" element={<MindfulMeditationPage />} />
-            <Route path="/resources/sleep-habits" element={<SleepHabitsPage />} />
-            <Route path="/journal" element={<JournalPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-            <Route path="/chat" element={<ChatPage />} />
-            <Route path="/achievements" element={<AchievementsPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
-            <Route path="/settings" element={<SettingsPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <ThemeProvider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route path="/" element={<Dashboard />} />
+              <Route path="/mood" element={<MoodTrackerPage />} />
+              <Route path="/habits" element={<HabitsPage />} />
+              <Route path="/resources" element={<ResourcesPage />} />
+              <Route path="/resources/managing-exam-stress" element={<ManagingExamStressPage />} />
+              <Route path="/resources/mindful-meditation" element={<MindfulMeditationPage />} />
+              <Route path="/resources/sleep-habits" element={<SleepHabitsPage />} />
+              <Route path="/journal" element={<JournalPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/chat" element={<ChatPage />} />
+              <Route path="/achievements" element={<AchievementsPage />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
