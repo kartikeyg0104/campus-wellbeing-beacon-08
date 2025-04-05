@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -42,6 +41,7 @@ If you're missing information (like date/time), ask the user for it.
 Focus on mental health, wellness strategies, campus resources, and academic support.`;
 
 export function ChatSupport() {
+  
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
