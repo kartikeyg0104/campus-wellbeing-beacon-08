@@ -2,7 +2,8 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Trophy, Award, Star, Badge, Crown, Medal, Target, Clock } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
+import { Trophy, Award, Star, Crown, Medal, Target, Clock } from 'lucide-react';
 
 // Define achievement data structure
 interface Achievement {
@@ -168,7 +169,7 @@ const AchievementsPage: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <h3 className="font-medium">{achievement.title}</h3>
                       {achievement.completed && (
-                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">
+                        <Badge className="bg-primary/10 text-primary border-primary/30">
                           Completed
                         </Badge>
                       )}
