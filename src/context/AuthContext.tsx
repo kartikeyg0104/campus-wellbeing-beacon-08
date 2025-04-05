@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface User {
   id: string;
@@ -52,6 +53,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         
         setUser(userData);
         localStorage.setItem("user", JSON.stringify(userData));
+        
+        // Update the profile in Supabase with the login information
+        try {
+          await supabase
+            .from('profiles')
+            .upsert({
+              id: userData.id,
+              name: name,
+              email: email,
+              updated_at: new Date().toISOString()
+            }, {
+              onConflict: 'id'
+            });
+        } catch (profileError) {
+          console.error("Error updating profile:", profileError);
+          // We don't throw this error to avoid blocking login
+        }
         
         toast({
           title: "Login successful",
