@@ -10,15 +10,16 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogFooter,
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { 
-  sendMessageToGemini, 
-  GeminiMessage, 
-  useGeminiApiKey 
-} from '@/services/geminiService';
+  sendMessageToOpenAI, 
+  ChatMessage,
+  useOpenAIApiKey 
+} from '@/services/openaiService';
 
 interface Message {
   id: string;
@@ -36,7 +37,7 @@ const INITIAL_MESSAGES: Message[] = [
   },
 ];
 
-// Context for the Gemini AI assistant
+// Context for the AI wellness assistant
 const SYSTEM_CONTEXT = `You are a wellness assistant for a campus wellness app. 
 Your responsibilities include:
 1. Intent Detection – Identify what the user is trying to do (e.g., book a meeting, ask a question, request help).
@@ -62,7 +63,7 @@ export function ChatSupport() {
   
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { apiKey, validateAndSetApiKey, isValidating, hasApiKey } = useGeminiApiKey();
+  const { apiKey, validateAndSetApiKey, isValidating, hasApiKey } = useOpenAIApiKey();
   
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -92,7 +93,7 @@ export function ChatSupport() {
     if (isValid) {
       toast({
         title: "API Key Saved",
-        description: "Your Gemini API key has been saved successfully.",
+        description: "Your OpenAI API key has been saved successfully.",
       });
       setApiKeyDialogOpen(false);
     } else {
@@ -121,24 +122,24 @@ export function ChatSupport() {
     setIsLoading(true);
     
     try {
-      // Format messages for Gemini API
-      const geminiMessages: GeminiMessage[] = [
+      // Format messages for OpenAI API
+      const openaiMessages: ChatMessage[] = [
         {
-          role: 'user',
-          parts: [{ text: SYSTEM_CONTEXT }]
+          role: 'system',
+          content: SYSTEM_CONTEXT
         },
         ...messages.map(msg => ({
-          role: msg.sender === 'user' ? 'user' : 'model' as 'user' | 'model',
-          parts: [{ text: msg.content }]
+          role: msg.sender === 'user' ? 'user' : 'assistant',
+          content: msg.content
         })),
         {
           role: 'user',
-          parts: [{ text: newMessage }]
+          content: newMessage
         }
       ];
       
-      // Send to Gemini API
-      const response = await sendMessageToGemini(geminiMessages);
+      // Send to OpenAI API
+      const response = await sendMessageToOpenAI(openaiMessages);
       
       const supportMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -185,7 +186,7 @@ export function ChatSupport() {
           <div className="border-b p-4 flex justify-between items-center">
             <div>
               <h3 className="font-semibold text-lg">Wellness Support Chat</h3>
-              <p className="text-sm text-muted-foreground">Powered by Gemini AI</p>
+              <p className="text-sm text-muted-foreground">Powered by OpenAI</p>
             </div>
             
             <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
@@ -197,17 +198,20 @@ export function ChatSupport() {
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Set Gemini API Key</DialogTitle>
+                  <DialogTitle>Set OpenAI API Key</DialogTitle>
+                  <DialogDescription>
+                    Enter your OpenAI API key to enable the chat support feature.
+                  </DialogDescription>
                 </DialogHeader>
                 <div className="py-4">
-                  <Label htmlFor="apiKey">Gemini API Key</Label>
+                  <Label htmlFor="apiKey">OpenAI API Key</Label>
                   <div className="mt-2 space-y-1">
                     <Input
                       id="apiKey"
                       type="password"
                       value={apiKeyInput}
                       onChange={(e) => setApiKeyInput(e.target.value)}
-                      placeholder="Enter your Gemini API key"
+                      placeholder="Enter your OpenAI API key"
                       className={apiKeyError ? "border-red-500" : ""}
                     />
                     {apiKeyError && (
@@ -217,7 +221,7 @@ export function ChatSupport() {
                   <div className="flex items-start gap-2 mt-2">
                     <Shield className="h-4 w-4 mt-0.5 text-muted-foreground" />
                     <p className="text-sm text-muted-foreground">
-                      Get your API key from the <a href="https://ai.google.dev/" target="_blank" rel="noreferrer" className="text-primary hover:underline">Google AI Studio</a>. Your key is stored locally in your browser.
+                      Get your API key from the <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" className="text-primary hover:underline">OpenAI platform</a>. Your key is stored locally in your browser.
                     </p>
                   </div>
                 </div>
@@ -255,7 +259,7 @@ export function ChatSupport() {
               <div className="flex justify-center items-center h-32">
                 <div className="text-center p-4 bg-muted rounded-lg">
                   <Key className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
-                  <p className="font-medium">Gemini API Key Required</p>
+                  <p className="font-medium">OpenAI API Key Required</p>
                   <p className="text-sm text-muted-foreground mt-1">
                     Please set your API key to start chatting
                   </p>
