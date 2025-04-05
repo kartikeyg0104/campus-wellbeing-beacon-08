@@ -19,6 +19,14 @@ interface ProfileData {
   avatarUrl: string;
 }
 
+// Profile type that matches Supabase's structure
+interface SupabaseProfile {
+  name: string | null;
+  bio: string | null;
+  email: string | null;
+  avatar_url: string | null;
+}
+
 const ProfilePage: React.FC = () => {
   const [openEditDialog, setOpenEditDialog] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
@@ -56,11 +64,12 @@ const ProfilePage: React.FC = () => {
         if (error) throw error;
         
         if (data) {
+          const profile = data as SupabaseProfile;
           setProfileData({
-            name: data.name || "",
-            bio: data.bio || "",
-            email: data.email || "",
-            avatarUrl: data.avatar_url || "https://github.com/shadcn.png"
+            name: profile.name || "",
+            bio: profile.bio || "",
+            email: profile.email || "",
+            avatarUrl: profile.avatar_url || "https://github.com/shadcn.png"
           });
         }
       } catch (error: any) {
@@ -110,7 +119,8 @@ const ProfilePage: React.FC = () => {
         // Calculate tracking days
         let trackingDays = 0;
         if (earliestEntry && earliestEntry.length > 0) {
-          const firstDay = new Date(earliestEntry[0].created_at);
+          const entry = earliestEntry[0] as { created_at: string };
+          const firstDay = new Date(entry.created_at);
           const today = new Date();
           trackingDays = Math.floor((today.getTime() - firstDay.getTime()) / (1000 * 60 * 60 * 24)) + 1;
         }
