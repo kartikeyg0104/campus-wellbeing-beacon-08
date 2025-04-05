@@ -4,7 +4,9 @@ import { MoodTracker } from '@/components/wellness/MoodTracker';
 import { WellnessStats } from '@/components/wellness/WellnessStats';
 import { WellnessRecommendations } from '@/components/wellness/Recommendations';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Trophy } from 'lucide-react';
+import { ArrowRight, Trophy, Calendar, BarChart2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from '@/components/ui/card';
 
 const Dashboard: React.FC = () => {
   // Sample wellness scores
@@ -34,16 +36,47 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div className="md:col-span-1 lg:col-span-1">
+      <div className="grid gap-6 md:grid-cols-3">
+        <div className="col-span-3 md:col-span-1">
           <MoodTracker />
         </div>
-        <div className="md:col-span-1 lg:col-span-2">
+        <div className="col-span-3 md:col-span-2">
           <WellnessStats />
         </div>
       </div>
 
-      <WellnessRecommendations />
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="md:col-span-1">
+          <Card>
+            <CardContent className="pt-6">
+              <Link to="/habits" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <div className="p-2 rounded-full bg-primary/10">
+                  <Calendar className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">Track Habits</h3>
+                  <p className="text-sm text-muted-foreground">Build consistent wellness routines</p>
+                </div>
+                <ArrowRight className="h-4 w-4 ml-auto" />
+              </Link>
+              
+              <Link to="/analytics" className="flex items-center gap-4 p-4 rounded-lg hover:bg-muted transition-colors">
+                <div className="p-2 rounded-full bg-primary/10">
+                  <BarChart2 className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-medium">View Analytics</h3>
+                  <p className="text-sm text-muted-foreground">See your wellness trends</p>
+                </div>
+                <ArrowRight className="h-4 w-4 ml-auto" />
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
+        <div className="md:col-span-1 lg:col-span-2">
+          <WellnessRecommendations />
+        </div>
+      </div>
 
       <div className="bg-gradient-to-r from-primary/80 to-accent/80 rounded-xl p-6 text-white shadow-md">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
@@ -53,9 +86,11 @@ const Dashboard: React.FC = () => {
               Connect with campus counselors or peer support groups. We're here to help whenever you need it.
             </p>
           </div>
-          <Button className="bg-white text-primary hover:bg-white/90 shadow-sm">
-            View Support Options
-            <ArrowRight className="ml-2 h-4 w-4" />
+          <Button className="bg-white text-primary hover:bg-white/90 shadow-sm" asChild>
+            <Link to="/chat">
+              View Support Options
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </Button>
         </div>
       </div>
