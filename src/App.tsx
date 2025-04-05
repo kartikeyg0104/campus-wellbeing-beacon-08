@@ -11,7 +11,6 @@ import { ThemeProvider } from "./context/ThemeProvider";
 
 // Auth pages
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
 
 // App pages
 import Dashboard from "./pages/Dashboard";
@@ -53,7 +52,6 @@ const App = () => (
             <Routes>
               {/* Auth Routes */}
               <Route path="/login" element={<LoginPage />} />
-              <Route path="/signup" element={<SignupPage />} />
               
               {/* Protected App Routes */}
               <Route element={

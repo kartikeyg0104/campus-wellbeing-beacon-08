@@ -111,13 +111,6 @@ const LoginPage: React.FC = () => {
               <p className="text-muted-foreground">Demo credentials:</p>
               <p className="text-xs text-muted-foreground">Email: demo@example.com / Password: password</p>
             </div>
-            
-            <div className="text-center text-sm">
-              Don't have an account?{" "}
-              <Link to="/signup" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </div>
           </CardFooter>
         </form>
       </Card>
