@@ -7,17 +7,19 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Trophy, Calendar, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
+import { useAuth } from '@/context/AuthContext';
 
 const Dashboard: React.FC = () => {
   // Sample wellness scores
   const wellnessScore = 78;
   const wellnessChange = '+4';
+  const { user } = useAuth();
   
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Welcome back, Alex</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Welcome back, {user?.name || 'User'}</h1>
           <p className="text-muted-foreground">
             Monitor your wellness and build healthy habits.
           </p>

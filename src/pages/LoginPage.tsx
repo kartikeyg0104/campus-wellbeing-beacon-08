@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { useToast } from "@/hooks/use-toast";
 
 const LoginPage: React.FC = () => {
+  const [name, setName] = useState("Demo User");
   const [email, setEmail] = useState("demo@example.com");
   const [password, setPassword] = useState("password");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
@@ -21,7 +22,7 @@ const LoginPage: React.FC = () => {
     setIsLoggingIn(true);
     
     try {
-      await login(email, password);
+      await login(email, password, name);
       navigate("/app");
     } catch (error) {
       console.error("Login failed:", error);
@@ -36,17 +37,28 @@ const LoginPage: React.FC = () => {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold text-center">Campus Wellness Monitor</CardTitle>
           <CardDescription className="text-center">
-            Enter your credentials to access your wellness dashboard
+            Enter your details to access your wellness dashboard
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
+              <Label htmlFor="name">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Your Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="demo@example.com"
+                placeholder="your.email@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

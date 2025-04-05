@@ -14,7 +14,7 @@ interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, name?: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -35,18 +35,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setIsLoading(false);
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, name: string = "Demo User") => {
     try {
       setIsLoading(true);
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // For demo purposes - in a real app, this would validate against a backend
-      if (email === "demo@example.com" && password === "password") {
+      // Accept any email/password combination for demo purposes
+      if (password.length > 0) {
         const userData = {
-          id: "1",
-          name: "Demo User",
-          email: "demo@example.com",
+          id: Date.now().toString(),
+          name: name,
+          email: email,
           role: "student"
         };
         
@@ -55,12 +55,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         
         toast({
           title: "Login successful",
-          description: "Welcome back to Campus Wellness Beacon!",
+          description: `Welcome, ${name}, to Campus Wellness Beacon!`,
         });
         
         navigate("/app");
       } else {
-        throw new Error("Invalid credentials");
+        throw new Error("Password is required");
       }
     } catch (error) {
       toast({
