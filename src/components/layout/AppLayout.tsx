@@ -3,16 +3,18 @@ import React from 'react';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
-import { User, Bell, Settings, Moon, Sun } from 'lucide-react';
+import { User, Bell, Settings, Moon, Sun, LogOut } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Badge } from '@/components/ui/badge';
 import { useTheme } from '@/context/ThemeProvider';
+import { useAuth } from '@/context/AuthContext';
 
 export function AppLayout() {
   const { toast } = useToast();
   const location = useLocation();
   const { theme, setTheme } = useTheme();
+  const { user, logout } = useAuth();
   
   const showNotification = () => {
     toast({
@@ -25,6 +27,10 @@ export function AppLayout() {
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -66,6 +72,14 @@ export function AppLayout() {
                 <Link to="/profile">
                   <User size={20} />
                 </Link>
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={handleLogout}
+                title="Logout"
+              >
+                <LogOut size={20} />
               </Button>
             </div>
           </header>
