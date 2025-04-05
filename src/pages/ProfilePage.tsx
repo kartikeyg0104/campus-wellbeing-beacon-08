@@ -1,13 +1,29 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Medal, Calendar, Heart, BookOpen, BarChart2 } from 'lucide-react';
+import EditProfileDialog from '@/components/profile/EditProfileDialog';
+
+interface ProfileData {
+  name: string;
+  bio: string;
+  email: string;
+  avatarUrl: string;
+}
 
 const ProfilePage: React.FC = () => {
+  const [openEditDialog, setOpenEditDialog] = useState(false);
+  const [profileData, setProfileData] = useState<ProfileData>({
+    name: "Jane Doe",
+    bio: "Student at University",
+    email: "jane.doe@university.edu",
+    avatarUrl: "https://github.com/shadcn.png"
+  });
+
   return (
     <div className="space-y-6">
       <div>
@@ -23,14 +39,17 @@ const ProfilePage: React.FC = () => {
             <CardHeader className="text-center">
               <div className="flex justify-center mb-4">
                 <Avatar className="h-24 w-24">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                  <AvatarFallback>JD</AvatarFallback>
+                  <AvatarImage src={profileData.avatarUrl} alt={profileData.name} />
+                  <AvatarFallback>{profileData.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
               </div>
-              <CardTitle>Jane Doe</CardTitle>
-              <CardDescription className="flex justify-center gap-2">
-                <Badge variant="outline" className="bg-primary/10">Student</Badge>
-                <Badge variant="outline" className="bg-green-100 text-green-800">Active</Badge>
+              <CardTitle>{profileData.name}</CardTitle>
+              <CardDescription className="flex flex-col gap-2 items-center">
+                <div className="flex gap-2">
+                  <Badge variant="outline" className="bg-primary/10">Student</Badge>
+                  <Badge variant="outline" className="bg-green-100 text-green-800">Active</Badge>
+                </div>
+                <p className="text-sm mt-2">{profileData.bio}</p>
               </CardDescription>
             </CardHeader>
             <CardContent className="text-center">
@@ -39,7 +58,7 @@ const ProfilePage: React.FC = () => {
               </p>
             </CardContent>
             <CardFooter className="flex justify-center">
-              <Button variant="outline">Edit Profile</Button>
+              <Button variant="outline" onClick={() => setOpenEditDialog(true)}>Edit Profile</Button>
             </CardFooter>
           </Card>
           
@@ -166,6 +185,13 @@ const ProfilePage: React.FC = () => {
           </Card>
         </div>
       </div>
+      
+      <EditProfileDialog 
+        open={openEditDialog} 
+        setOpen={setOpenEditDialog} 
+        profileData={profileData}
+        setProfileData={setProfileData}
+      />
     </div>
   );
 };
