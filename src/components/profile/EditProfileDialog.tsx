@@ -14,6 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/context/AuthContext';
 
 interface EditProfileDialogProps {
   open: boolean;
@@ -32,6 +34,8 @@ interface ProfileData {
 export function EditProfileDialog({ open, setOpen, profileData, setProfileData }: EditProfileDialogProps) {
   const [formData, setFormData] = React.useState<ProfileData>(profileData);
   const { toast } = useToast();
+  const { user } = useAuth();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -41,16 +45,54 @@ export function EditProfileDialog({ open, setOpen, profileData, setProfileData }
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setProfileData(formData);
     
-    toast({
-      title: "Profile updated",
-      description: "Your profile has been updated successfully.",
-    });
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to update your profile.",
+        variant: "destructive"
+      });
+      return;
+    }
     
-    setOpen(false);
+    setIsLoading(true);
+    
+    try {
+      // Update the profile in Supabase
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          name: formData.name,
+          bio: formData.bio,
+          email: formData.email,
+          avatar_url: formData.avatarUrl,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id);
+        
+      if (error) throw error;
+      
+      // Update local state
+      setProfileData(formData);
+      
+      toast({
+        title: "Profile updated",
+        description: "Your profile has been updated successfully.",
+      });
+      
+      setOpen(false);
+    } catch (error: any) {
+      console.error('Error updating profile:', error);
+      toast({
+        title: "Update failed",
+        description: error.message || "There was an error updating your profile.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -124,7 +166,9 @@ export function EditProfileDialog({ open, setOpen, profileData, setProfileData }
             <DialogClose asChild>
               <Button type="button" variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit" disabled={isLoading}>
+              {isLoading ? "Saving..." : "Save changes"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
