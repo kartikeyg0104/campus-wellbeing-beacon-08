@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -74,7 +73,6 @@ export function ChatSupport() {
   }, [messages]);
   
   useEffect(() => {
-    // Check if API key is missing on component mount
     if (!hasApiKey) {
       setApiKeyDialogOpen(true);
     }
@@ -104,7 +102,6 @@ export function ChatSupport() {
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
     
-    // Check if API key exists
     if (!hasApiKey) {
       setApiKeyDialogOpen(true);
       return;
@@ -122,23 +119,21 @@ export function ChatSupport() {
     setIsLoading(true);
     
     try {
-      // Format messages for OpenAI API
       const openaiMessages: ChatMessage[] = [
         {
-          role: 'system',
+          role: 'system' as const,
           content: SYSTEM_CONTEXT
         },
         ...messages.map(msg => ({
-          role: msg.sender === 'user' ? 'user' : 'assistant',
+          role: msg.sender === 'user' ? 'user' as const : 'assistant' as const,
           content: msg.content
         })),
         {
-          role: 'user',
+          role: 'user' as const,
           content: newMessage
         }
       ];
       
-      // Send to OpenAI API
       const response = await sendMessageToOpenAI(openaiMessages);
       
       const supportMessage: Message = {
@@ -152,7 +147,6 @@ export function ChatSupport() {
     } catch (error) {
       console.error('Error getting response:', error);
       
-      // Show error as a system message
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: error instanceof Error 
@@ -164,7 +158,6 @@ export function ChatSupport() {
       
       setMessages(prev => [...prev, errorMessage]);
       
-      // If error is related to API key, prompt to set it
       if (error instanceof Error && error.message.includes('API key')) {
         setApiKeyDialogOpen(true);
       }
