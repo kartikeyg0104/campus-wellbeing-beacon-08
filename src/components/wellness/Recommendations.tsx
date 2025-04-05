@@ -17,6 +17,7 @@ import {
   Utensils,
   Moon
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface Recommendation {
   id: number;
@@ -36,7 +37,7 @@ const recommendations: Recommendation[] = [
     description: 'Take a quick break to reset with this guided breathing exercise.',
     icon: Brain,
     actionLabel: 'Start Exercise',
-    actionUrl: '/resources/breathing'
+    actionUrl: '/resources/breathing-exercise'
   },
   {
     id: 2,
@@ -54,7 +55,7 @@ const recommendations: Recommendation[] = [
     description: 'Foods that improve focus, memory, and cognitive function.',
     icon: Utensils,
     actionLabel: 'Explore Foods',
-    actionUrl: '/resources/nutrition'
+    actionUrl: '/resources/brain-foods'
   },
   {
     id: 4,
@@ -63,7 +64,7 @@ const recommendations: Recommendation[] = [
     description: 'Improve your sleep quality with these evidence-based tips.',
     icon: Moon,
     actionLabel: 'Read Guide',
-    actionUrl: '/resources/sleep'
+    actionUrl: '/resources/better-sleep'
   }
 ];
 
@@ -104,10 +105,10 @@ export const WellnessRecommendations: React.FC = () => {
                 className="w-full justify-between"
                 asChild
               >
-                <a href={recommendation.actionUrl}>
+                <Link to={recommendation.actionUrl}>
                   {recommendation.actionLabel}
                   <ExternalLink size={14} />
-                </a>
+                </Link>
               </Button>
             </div>
           ))}

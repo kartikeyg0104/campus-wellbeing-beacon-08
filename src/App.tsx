@@ -20,6 +20,9 @@ import NotFound from "./pages/NotFound";
 import ManagingExamStressPage from "./pages/ManagingExamStressPage";
 import MindfulMeditationPage from "./pages/MindfulMeditationPage";
 import SleepHabitsPage from "./pages/SleepHabitsPage";
+import BreathingExercisePage from "./pages/BreathingExercisePage";
+import StressManagementPage from "./pages/StressManagementPage";
+import BrainFoodsPage from "./pages/BrainFoodsPage";
 import { ThemeProvider } from "./context/ThemeProvider";
 
 const queryClient = new QueryClient({
@@ -47,6 +50,10 @@ const App = () => (
               <Route path="/resources/managing-exam-stress" element={<ManagingExamStressPage />} />
               <Route path="/resources/mindful-meditation" element={<MindfulMeditationPage />} />
               <Route path="/resources/sleep-habits" element={<SleepHabitsPage />} />
+              <Route path="/resources/breathing-exercise" element={<BreathingExercisePage />} />
+              <Route path="/resources/stress-management" element={<StressManagementPage />} />
+              <Route path="/resources/brain-foods" element={<BrainFoodsPage />} />
+              <Route path="/resources/better-sleep" element={<SleepHabitsPage />} />
               <Route path="/journal" element={<JournalPage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
               <Route path="/chat" element={<ChatPage />} />

@@ -77,6 +77,42 @@ export const resources: Resource[] = [
     type: 'video',
     category: 'physical',
     tags: ['nutrition', 'brain health', 'diet'],
-    link: '/resources/nutrition-brain'
+    link: '/resources/brain-foods'
+  },
+  {
+    id: '9',
+    title: '5-Minute Breathing Exercise',
+    description: 'Take a quick break to reset with this guided breathing exercise.',
+    type: 'audio',
+    category: 'mental',
+    tags: ['breathing', 'mindfulness', 'stress-relief'],
+    link: '/resources/breathing-exercise'
+  },
+  {
+    id: '10',
+    title: 'Stress Management Techniques',
+    description: 'Learn effective techniques to manage exam stress and anxiety.',
+    type: 'article',
+    category: 'mental',
+    tags: ['stress', 'mental health', 'self-care'],
+    link: '/resources/stress-management'
+  },
+  {
+    id: '11',
+    title: 'Brain-Boosting Foods',
+    description: 'Foods that improve focus, memory, and cognitive function.',
+    type: 'article',
+    category: 'physical',
+    tags: ['nutrition', 'brain health', 'diet'],
+    link: '/resources/brain-foods'
+  },
+  {
+    id: '12',
+    title: 'Better Sleep Guide',
+    description: 'Improve your sleep quality with these evidence-based tips.',
+    type: 'article',
+    category: 'sleep',
+    tags: ['sleep', 'health', 'wellness'],
+    link: '/resources/better-sleep'
   }
 ];
