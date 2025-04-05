@@ -1,24 +1,14 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, Smile, PlusCircle, Key, Loader2, Shield } from 'lucide-react';
+import { Send, Smile, PlusCircle, Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { 
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogTrigger
-} from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { 
-  sendMessageToOpenAI, 
-  ChatMessage,
-  useOpenAIApiKey 
-} from '@/services/openaiService';
+  sendMessageToLlama, 
+  ChatMessage 
+} from '@/services/llamaService';
 
 interface Message {
   id: string;
@@ -55,13 +45,9 @@ export function ChatSupport() {
   const [messages, setMessages] = useState<Message[]>(INITIAL_MESSAGES);
   const [newMessage, setNewMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKeyDialogOpen, setApiKeyDialogOpen] = useState(false);
-  const [apiKeyInput, setApiKeyInput] = useState('');
-  const [apiKeyError, setApiKeyError] = useState('');
   
   const { toast } = useToast();
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const { apiKey, validateAndSetApiKey, isValidating, hasApiKey } = useOpenAIApiKey();
   
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -71,40 +57,8 @@ export function ChatSupport() {
     scrollToBottom();
   }, [messages]);
   
-  useEffect(() => {
-    if (!hasApiKey) {
-      setApiKeyDialogOpen(true);
-    }
-  }, [hasApiKey]);
-  
-  const handleSaveApiKey = async () => {
-    setApiKeyError('');
-    
-    if (!apiKeyInput.trim()) {
-      setApiKeyError("API key cannot be empty");
-      return;
-    }
-    
-    const isValid = await validateAndSetApiKey(apiKeyInput);
-    
-    if (isValid) {
-      toast({
-        title: "API Key Saved",
-        description: "Your OpenAI API key has been saved successfully.",
-      });
-      setApiKeyDialogOpen(false);
-    } else {
-      setApiKeyError("Invalid API key. Please check and try again.");
-    }
-  };
-  
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
-    
-    if (!hasApiKey) {
-      setApiKeyDialogOpen(true);
-      return;
-    }
     
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -118,9 +72,9 @@ export function ChatSupport() {
     setIsLoading(true);
     
     try {
-      const openaiMessages: ChatMessage[] = [
+      const llamaMessages: ChatMessage[] = [
         {
-          role: 'system' as const,
+          role: 'system',
           content: SYSTEM_CONTEXT
         },
         ...messages.map(msg => ({
@@ -133,7 +87,7 @@ export function ChatSupport() {
         }
       ];
       
-      const response = await sendMessageToOpenAI(openaiMessages);
+      const response = await sendMessageToLlama(llamaMessages);
       
       const supportMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -157,10 +111,6 @@ export function ChatSupport() {
       
       setMessages(prev => [...prev, errorMessage]);
       
-      if (error instanceof Error && error.message.includes('API key')) {
-        setApiKeyDialogOpen(true);
-      }
-      
       toast({
         title: "Error",
         description: error instanceof Error ? error.message : "Failed to get response from AI",
@@ -178,53 +128,8 @@ export function ChatSupport() {
           <div className="border-b p-4 flex justify-between items-center">
             <div>
               <h3 className="font-semibold text-lg">Wellness Support Chat</h3>
-              <p className="text-sm text-muted-foreground">Powered by OpenAI</p>
+              <p className="text-sm text-muted-foreground">Powered by Llama</p>
             </div>
-            
-            <Dialog open={apiKeyDialogOpen} onOpenChange={setApiKeyDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <Key className="h-4 w-4 mr-2" />
-                  {hasApiKey ? "Update API Key" : "Set API Key"}
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Set OpenAI API Key</DialogTitle>
-                  <DialogDescription>
-                    Enter your OpenAI API key to enable the chat support feature.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="py-4">
-                  <Label htmlFor="apiKey">OpenAI API Key</Label>
-                  <div className="mt-2 space-y-1">
-                    <Input
-                      id="apiKey"
-                      type="password"
-                      value={apiKeyInput}
-                      onChange={(e) => setApiKeyInput(e.target.value)}
-                      placeholder="Enter your OpenAI API key"
-                      className={apiKeyError ? "border-red-500" : ""}
-                    />
-                    {apiKeyError && (
-                      <p className="text-sm text-red-500">{apiKeyError}</p>
-                    )}
-                  </div>
-                  <div className="flex items-start gap-2 mt-2">
-                    <Shield className="h-4 w-4 mt-0.5 text-muted-foreground" />
-                    <p className="text-sm text-muted-foreground">
-                      Get your API key from the <a href="https://platform.openai.com/api-keys" target="_blank" rel="noreferrer" className="text-primary hover:underline">OpenAI platform</a>. Your key is stored locally in your browser.
-                    </p>
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button onClick={handleSaveApiKey} disabled={isValidating}>
-                    {isValidating && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                    {isValidating ? "Validating..." : "Save API Key"}
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
           </div>
           
           <div className="flex-1 overflow-auto p-4 space-y-4">
@@ -247,25 +152,6 @@ export function ChatSupport() {
                 </div>
               </div>
             ))}
-            {!hasApiKey && messages.length === 1 && (
-              <div className="flex justify-center items-center h-32">
-                <div className="text-center p-4 bg-muted rounded-lg">
-                  <Key className="h-6 w-6 mx-auto mb-2 text-muted-foreground" />
-                  <p className="font-medium">OpenAI API Key Required</p>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    Please set your API key to start chatting
-                  </p>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => setApiKeyDialogOpen(true)} 
-                    className="mt-3"
-                  >
-                    Set API Key
-                  </Button>
-                </div>
-              </div>
-            )}
             <div ref={messagesEndRef} />
           </div>
           
@@ -279,13 +165,13 @@ export function ChatSupport() {
               </Button>
               <Input
                 className="flex-1"
-                placeholder={hasApiKey ? "Type your message..." : "Set API key to start chatting"}
+                placeholder="Type your message..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSendMessage()}
-                disabled={isLoading || !hasApiKey}
+                disabled={isLoading}
               />
-              <Button onClick={handleSendMessage} disabled={isLoading || !hasApiKey}>
+              <Button onClick={handleSendMessage} disabled={isLoading}>
                 {isLoading ? <Loader2 className="h-4 w-4 mr-2 animate-spin" /> : <Send className="h-4 w-4 mr-2" />}
                 {isLoading ? "Sending..." : "Send"}
               </Button>
