@@ -33,11 +33,13 @@ export function AppLayout() {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={showNotification}
+                asChild
                 className="relative"
               >
-                <Bell size={20} />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
+                <Link to="/notifications">
+                  <Bell size={20} />
+                  <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full"></span>
+                </Link>
               </Button>
               <Button variant="ghost" size="icon" asChild>
                 <Link to="/settings">

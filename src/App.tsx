@@ -13,6 +13,7 @@ import JournalPage from "./pages/JournalPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import ChatPage from "./pages/ChatPage";
 import AchievementsPage from "./pages/AchievementsPage";
+import NotificationsPage from "./pages/NotificationsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/achievements" element={<AchievementsPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
