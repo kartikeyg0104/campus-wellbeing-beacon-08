@@ -16,6 +16,7 @@ const moodHistory = [
   { date: 'Apr 2', mood: 4, notes: 'Had a good day! Finished my project early.' },
   { date: 'Apr 3', mood: 2, notes: 'Stressed about upcoming exams. Not sleeping well.' },
   { date: 'Apr 4', mood: 3, notes: 'Better today. Study group was helpful.' },
+  { date: 'Apr 5', mood: 4, notes: 'Got good news about my job application.' },
 ];
 
 // Mood label mapping

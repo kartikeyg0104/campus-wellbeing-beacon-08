@@ -34,7 +34,14 @@ export const MonthlyAverageChart: React.FC = () => {
         <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
         <XAxis dataKey="date" />
         <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
-        <Tooltip />
+        <Tooltip 
+          formatter={(value: number) => [value.toFixed(1), 'Average Mood']}
+          contentStyle={{ 
+            borderRadius: '8px', 
+            border: '1px solid #e2e8f0',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+          }}
+        />
         <Area 
           type="monotone" 
           dataKey="average" 
