@@ -20,9 +20,13 @@ import {
   MessageSquare,
   Book,
   Lightbulb,
-  Medal
+  Medal,
+  PenTool,
+  ChevronLeft
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/context/ThemeProvider';
+import { Button } from '../ui/button';
 
 const mainMenuItems = [
   { title: 'Dashboard', icon: Home, path: '/app' },
@@ -32,33 +36,57 @@ const mainMenuItems = [
 ];
 
 const resourcesMenuItems = [
-  { title: 'Journal', icon: Book, path: '/app/journal' },
+  { title: 'Journal', icon: PenTool, path: '/app/journal' },
   { title: 'Resources', icon: Lightbulb, path: '/app/resources' },
   { title: 'Chat Support', icon: MessageSquare, path: '/app/chat' },
   { title: 'Achievements', icon: Medal, path: '/app/achievements' },
 ];
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
   const location = useLocation();
+  const { theme } = useTheme();
   
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
+  const handleCloseSidebar = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <Sidebar>
-      <div className="flex h-16 items-center px-4 border-b">
+    <Sidebar 
+      className={cn(
+        "fixed inset-y-0 left-0 z-20 w-64 transition-transform transform-gpu duration-300 ease-in-out border-r",
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      )}
+    >
+      <div className="flex h-16 items-center justify-between px-4 border-b">
         <div className="flex items-center gap-2">
-          <div className="bg-primary rounded-full w-8 h-8 flex items-center justify-center">
+          <div className="bg-primary rounded-full w-8 h-8 flex items-center justify-center animate-pulse-gentle">
             <span className="text-primary-foreground font-semibold">WB</span>
           </div>
-          <span className="font-semibold">Wellness Beacon</span>
+          <span className="font-semibold tracking-tight">Wellness Beacon</span>
         </div>
-        <SidebarTrigger className="ml-auto md:hidden" />
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={handleCloseSidebar}
+          className="lg:hidden"
+        >
+          <ChevronLeft size={18} />
+        </Button>
       </div>
-      <SidebarContent>
+      <SidebarContent className="p-0">
         <SidebarGroup>
-          <SidebarGroupLabel>Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="px-4 py-2 text-xs font-medium text-muted-foreground">
+            Menu
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {mainMenuItems.map((item) => (
@@ -67,12 +95,17 @@ export function AppSidebar() {
                     <Link 
                       to={item.path}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-md",
-                        isActive(item.path) && "bg-primary/10 text-primary font-medium"
+                        "flex items-center gap-3 mx-3 px-3 py-2 rounded-lg transition-all",
+                        isActive(item.path) 
+                          ? "bg-primary/15 text-primary font-medium" 
+                          : "hover:bg-muted"
                       )}
                     >
-                      <item.icon size={20} />
+                      <item.icon size={18} className={isActive(item.path) ? "text-primary" : "text-foreground/70"} />
                       <span>{item.title}</span>
+                      {isActive(item.path) && (
+                        <div className="absolute w-1 h-5 right-0 bg-primary rounded-full animate-pulse-gentle"></div>
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -81,8 +114,10 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
         
-        <SidebarGroup>
-          <SidebarGroupLabel>Resources</SidebarGroupLabel>
+        <SidebarGroup className="mt-2">
+          <SidebarGroupLabel className="px-4 py-2 text-xs font-medium text-muted-foreground">
+            Resources
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {resourcesMenuItems.map((item) => (
@@ -91,12 +126,17 @@ export function AppSidebar() {
                     <Link 
                       to={item.path}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 rounded-md",
-                        isActive(item.path) && "bg-primary/10 text-primary font-medium"
+                        "flex items-center gap-3 mx-3 px-3 py-2 rounded-lg transition-all",
+                        isActive(item.path) 
+                          ? "bg-primary/15 text-primary font-medium" 
+                          : "hover:bg-muted"
                       )}
                     >
-                      <item.icon size={20} />
+                      <item.icon size={18} className={isActive(item.path) ? "text-primary" : "text-foreground/70"} />
                       <span>{item.title}</span>
+                      {isActive(item.path) && (
+                        <div className="absolute w-1 h-5 right-0 bg-primary rounded-full animate-pulse-gentle"></div>
+                      )}
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -104,6 +144,26 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        <div className="absolute bottom-0 left-0 right-0 p-4">
+          <div className={cn(
+            "rounded-xl p-4 bg-gradient-to-br",
+            theme === 'dark' 
+              ? "from-primary/20 to-accent/20" 
+              : "from-accent/50 to-accent/20"
+          )}>
+            <h4 className="font-medium text-sm mb-2">Need support?</h4>
+            <p className="text-xs text-muted-foreground mb-3">
+              Access professional help whenever you need it.
+            </p>
+            <Button size="sm" variant="secondary" className="w-full text-xs" asChild>
+              <Link to="/app/chat">
+                <MessageSquare size={14} className="mr-2" />
+                Start Chat
+              </Link>
+            </Button>
+          </div>
+        </div>
       </SidebarContent>
     </Sidebar>
   );
