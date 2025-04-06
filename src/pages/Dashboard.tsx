@@ -9,7 +9,11 @@ import { ResourceCard } from '@/components/resources/ResourceCard';
 import { useGamification } from '@/context/GamificationContext';
 
 const Dashboard: React.FC = () => {
-  const { gameState, quests, resources } = useGamification();
+  const { gameState } = useGamification();
+  
+  // Get quests and resources from gameState
+  const activeQuests = gameState.quests.filter(quest => !quest.completed);
+  const recommendedResources = gameState.resources?.slice(0, 2) || [];
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -27,14 +31,14 @@ const Dashboard: React.FC = () => {
       <div className="space-y-6">
         <div className="bg-card border rounded-lg p-4 space-y-4">
           <h3 className="text-lg font-semibold">Active Quests</h3>
-          {quests.filter(quest => !quest.completed).map(quest => (
+          {activeQuests.map(quest => (
             <QuestCard key={quest.id} quest={quest} />
           ))}
         </div>
         
         <div className="bg-card border rounded-lg p-4 space-y-4">
           <h3 className="text-lg font-semibold">Recommended Resources</h3>
-          {resources.slice(0, 2).map(resource => (
+          {recommendedResources.map(resource => (
             <ResourceCard key={resource.id} resource={resource} />
           ))}
         </div>
