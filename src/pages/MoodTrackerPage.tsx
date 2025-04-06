@@ -4,6 +4,7 @@ import { MoodTracker } from '@/components/wellness/MoodTracker';
 import { MoodHistory } from '@/components/wellness/MoodHistory';
 import { MoodAnalytics } from '@/components/wellness/MoodAnalytics';
 import { motion } from 'framer-motion';
+import { Card } from '@/components/ui/card';
 
 const MoodTrackerPage: React.FC = () => {
   return (
@@ -25,6 +26,7 @@ const MoodTrackerPage: React.FC = () => {
           initial={{ x: -20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
+          className="bg-card border rounded-lg shadow-sm"
         >
           <MoodTracker />
         </motion.div>
@@ -32,6 +34,7 @@ const MoodTrackerPage: React.FC = () => {
           initial={{ x: 20, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
+          className="bg-card border rounded-lg shadow-sm"
         >
           <MoodHistory />
         </motion.div>
@@ -41,6 +44,7 @@ const MoodTrackerPage: React.FC = () => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3 }}
+        className="bg-card border rounded-lg shadow-sm"
       >
         <MoodAnalytics />
       </motion.div>

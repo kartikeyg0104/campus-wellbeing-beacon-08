@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MoodTracker } from '@/components/wellness/MoodTracker';
 import { HabitTracker } from '@/components/wellness/HabitTracker';
@@ -31,13 +30,31 @@ import { Progress } from '@/components/ui/progress';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { ChartContainer } from '@/components/ui/chart';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer
+} from 'recharts';
+
+const weeklyMoodData = [
+  { day: 'Mon', value: 35 },
+  { day: 'Tue', value: 45 },
+  { day: 'Wed', value: 70 },
+  { day: 'Thu', value: 55 },
+  { day: 'Fri', value: 80 },
+  { day: 'Sat', value: 60 },
+  { day: 'Sun', value: 75 }
+];
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
   const timeOfDay = getTimeOfDay();
   const [loaded, setLoaded] = useState(false);
 
-  // Animation variants for staggered loading
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -72,12 +89,33 @@ const Dashboard: React.FC = () => {
     return 'evening';
   }
 
-  // Format today's date for the heading
   const today = new Date().toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
+
+  const chartConfig = {
+    mood: {
+      label: "Mood",
+      theme: {
+        light: "hsl(var(--primary))",
+        dark: "hsl(var(--primary))"
+      }
+    }
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-card text-card-foreground border border-border p-2 rounded-md shadow-lg">
+          <p className="font-medium">{`${payload[0].value}%`}</p>
+        </div>
+      );
+    }
+  
+    return null;
+  };
 
   return (
     <motion.div 
@@ -212,32 +250,36 @@ const Dashboard: React.FC = () => {
                   </h3>
                   <span className="text-xs text-muted-foreground">Last 7 days</span>
                 </div>
-                <div className="h-32 relative bg-muted/30 rounded-lg p-2">
-                  <div className="absolute inset-0 flex items-end justify-around">
-                    {[35, 45, 70, 55, 80, 60, 75].map((value, i) => (
-                      <motion.div 
-                        key={i} 
-                        className="relative group"
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        transition={{ delay: i * 0.1, duration: 0.5 }}
-                      >
-                        <motion.div 
-                          className="w-8 rounded-t-lg bg-gradient-to-t from-primary/90 to-primary/50 transition-all group-hover:from-primary group-hover:to-primary"
-                          style={{ height: `${value}%` }}
-                          whileHover={{ scale: 1.1 }}
-                        ></motion.div>
-                        <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 transform -translate-x-1/2 bg-foreground text-background rounded px-2 py-1 text-xs transition-opacity shadow-md">
-                          {value}%
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 flex justify-around text-xs text-muted-foreground">
-                    {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => (
-                      <div key={i}>{day}</div>
-                    ))}
-                  </div>
+                
+                <div className="h-48 w-full rounded-lg border border-border bg-card/50 overflow-hidden">
+                  <ChartContainer 
+                    className="h-full w-full" 
+                    config={chartConfig}
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={weeklyMoodData} margin={{ top: 10, right: 10, left: 0, bottom: 20 }}>
+                        <XAxis 
+                          dataKey="day" 
+                          axisLine={false}
+                          tickLine={false}
+                          tick={{ fill: 'var(--foreground)', fontSize: 12 }}
+                          dy={10}
+                        />
+                        <YAxis 
+                          hide 
+                          domain={[0, 100]} 
+                        />
+                        <Tooltip content={<CustomTooltip />} cursor={false} />
+                        <Bar 
+                          dataKey="value" 
+                          fill="var(--primary)" 
+                          radius={[4, 4, 0, 0]}
+                          barSize={30} 
+                          name="mood"
+                        />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
                 </div>
               </div>
               

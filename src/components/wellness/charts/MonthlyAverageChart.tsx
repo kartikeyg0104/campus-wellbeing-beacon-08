@@ -31,15 +31,28 @@ export const MonthlyAverageChart: React.FC = () => {
             <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-        <XAxis dataKey="date" />
-        <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
+        <CartesianGrid strokeDasharray="3 3" opacity={0.3} stroke="var(--border)" />
+        <XAxis 
+          dataKey="date" 
+          tick={{ fill: 'var(--foreground)', fontSize: 12 }}
+          axisLine={{ stroke: 'var(--border)' }}
+          tickLine={{ stroke: 'var(--border)' }}
+        />
+        <YAxis 
+          domain={[1, 5]} 
+          ticks={[1, 2, 3, 4, 5]} 
+          tick={{ fill: 'var(--foreground)', fontSize: 12 }}
+          axisLine={{ stroke: 'var(--border)' }}
+          tickLine={{ stroke: 'var(--border)' }}
+        />
         <Tooltip 
           formatter={(value: number) => [value.toFixed(1), 'Average Mood']}
           contentStyle={{ 
             borderRadius: '8px', 
-            border: '1px solid #e2e8f0',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
+            border: '1px solid var(--border)',
+            backgroundColor: 'var(--background)',
+            color: 'var(--foreground)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)' 
           }}
         />
         <Area 

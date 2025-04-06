@@ -15,6 +15,8 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  AreaChart,
+  Area,
 } from 'recharts';
 
 // Sample mood data for the past week
@@ -47,46 +49,71 @@ export const WellnessStats: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="h-64 w-full">
+          <div className="h-64 w-full bg-card/50 border border-border rounded-md p-2">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart
+              <AreaChart
                 data={moodData}
                 margin={{
-                  top: 5,
+                  top: 10,
                   right: 10,
                   left: 0,
-                  bottom: 5,
+                  bottom: 10,
                 }}
               >
-                <CartesianGrid strokeDasharray="3 3" opacity={0.3} />
-                <XAxis dataKey="day" />
-                <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} />
+                <defs>
+                  <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                  </linearGradient>
+                  <linearGradient id="colorStress" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="hsl(var(--destructive))" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="hsl(var(--destructive))" stopOpacity={0.1}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" opacity={0.3} stroke="var(--border)" />
+                <XAxis 
+                  dataKey="day" 
+                  tick={{ fill: 'var(--foreground)', fontSize: 12 }}
+                  axisLine={{ stroke: 'var(--border)' }}
+                  tickLine={{ stroke: 'var(--border)' }}
+                />
+                <YAxis 
+                  domain={[1, 5]} 
+                  ticks={[1, 2, 3, 4, 5]} 
+                  tick={{ fill: 'var(--foreground)', fontSize: 12 }}
+                  axisLine={{ stroke: 'var(--border)' }}
+                  tickLine={{ stroke: 'var(--border)' }}
+                />
                 <Tooltip 
                   contentStyle={{ 
                     borderRadius: '8px', 
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--border)',
+                    backgroundColor: 'var(--background)',
+                    color: 'var(--foreground)',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.1)' 
                   }} 
                 />
-                <Line 
+                <Area 
                   type="monotone" 
                   dataKey="mood" 
                   stroke="hsl(var(--primary))" 
                   strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#colorMood)"
                   name="Mood"
-                  dot={{ r: 4 }}
                   activeDot={{ r: 6, strokeWidth: 2 }}
                 />
-                <Line 
+                <Area 
                   type="monotone" 
                   dataKey="stress" 
                   stroke="hsl(var(--destructive))" 
                   strokeWidth={2}
+                  fillOpacity={1}
+                  fill="url(#colorStress)"
                   name="Stress"
-                  dot={{ r: 4 }}
                   activeDot={{ r: 6, strokeWidth: 2 }}
                 />
-              </LineChart>
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </CardContent>
@@ -103,7 +130,7 @@ export const WellnessStats: React.FC = () => {
                 <div className="flex items-end justify-between">
                   <h3 className="text-2xl font-bold">{metric.value}</h3>
                   <span className={`text-sm font-medium flex items-center ${
-                    metric.positive ? 'text-green-600' : 'text-red-600'
+                    metric.positive ? 'text-green-600 dark:text-green-500' : 'text-red-600 dark:text-red-500'
                   }`}>
                     {metric.change}
                   </span>
