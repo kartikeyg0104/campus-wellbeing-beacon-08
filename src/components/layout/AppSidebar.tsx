@@ -5,8 +5,8 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -22,11 +22,17 @@ import {
   Lightbulb,
   Medal,
   PenTool,
-  ChevronLeft
+  ChevronLeft,
+  Target,
+  Trophy,
+  Map,
+  Users
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/context/ThemeProvider';
 import { Button } from '../ui/button';
+import { XpIndicator } from '../gamification/XpIndicator';
+import { StreakCounter } from '../gamification/StreakCounter';
 
 const mainMenuItems = [
   { title: 'Dashboard', icon: Home, path: '/app' },
@@ -39,7 +45,13 @@ const resourcesMenuItems = [
   { title: 'Journal', icon: PenTool, path: '/app/journal' },
   { title: 'Resources', icon: Lightbulb, path: '/app/resources' },
   { title: 'Chat Support', icon: MessageSquare, path: '/app/chat' },
+];
+
+const gamificationMenuItems = [
+  { title: 'Quests', icon: Target, path: '/app/quests' },
   { title: 'Achievements', icon: Medal, path: '/app/achievements' },
+  { title: 'Wellness Journey', icon: Map, path: '/app/journey' },
+  { title: 'Leaderboard', icon: Trophy, path: '/app/leaderboard' },
 ];
 
 interface AppSidebarProps {
@@ -82,6 +94,12 @@ export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
           <ChevronLeft size={18} />
         </Button>
       </div>
+      
+      <div className="flex items-center justify-between px-4 py-2 border-b">
+        <XpIndicator />
+        <StreakCounter />
+      </div>
+      
       <SidebarContent className="p-0">
         <SidebarGroup>
           <SidebarGroupLabel className="px-4 py-2 text-xs font-medium text-muted-foreground">
@@ -121,6 +139,37 @@ export function AppSidebar({ isOpen, setIsOpen }: AppSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               {resourcesMenuItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <Link 
+                      to={item.path}
+                      className={cn(
+                        "flex items-center gap-3 mx-3 px-3 py-2 rounded-lg transition-all",
+                        isActive(item.path) 
+                          ? "bg-primary/15 text-primary font-medium" 
+                          : "hover:bg-muted"
+                      )}
+                    >
+                      <item.icon size={18} className={isActive(item.path) ? "text-primary" : "text-foreground/70"} />
+                      <span>{item.title}</span>
+                      {isActive(item.path) && (
+                        <div className="absolute w-1 h-5 right-0 bg-primary rounded-full animate-pulse-gentle"></div>
+                      )}
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        
+        <SidebarGroup className="mt-2">
+          <SidebarGroupLabel className="px-4 py-2 text-xs font-medium text-muted-foreground">
+            Gamification
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {gamificationMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <Link 

@@ -11,7 +11,8 @@ import {
   BookOpen,
   Sun,
   Moon,
-  Trophy
+  Trophy,
+  Sparkles
 } from 'lucide-react';
 import {
   Card,
@@ -27,6 +28,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useGamification } from '@/context/GamificationContext';
 import {
   Select,
   SelectContent,
@@ -59,12 +61,13 @@ export const HabitTracker: React.FC = () => {
   const [selectedHabitType, setSelectedHabitType] = useState('Hydration');
   const [isAddingHabit, setIsAddingHabit] = useState(false);
   const { toast } = useToast();
+  const { addXp } = useGamification();
 
   const addHabit = () => {
-    if (!newHabit.trim()) {
+    if (!newHabit.trim() && !selectedHabitType) {
       toast({
         title: "Habit name required",
-        description: "Please enter a habit name.",
+        description: "Please enter a habit name or select a preset.",
         variant: "destructive",
       });
       return;
@@ -81,6 +84,9 @@ export const HabitTracker: React.FC = () => {
     setNewHabit('');
     setIsAddingHabit(false);
     
+    // Award XP for creating a new habit
+    addXp(10, 'habit_complete', `Added new habit: ${selectedHabitType || newHabit}`);
+    
     toast({
       title: "Habit created",
       description: `"${selectedHabitType || newHabit}" has been added to your habits.`,
@@ -93,6 +99,9 @@ export const HabitTracker: React.FC = () => {
         const completed = !habit.completed;
         
         if (completed) {
+          // Award XP for completing a habit
+          addXp(15, 'habit_complete', `Completed habit: ${habit.name}`);
+          
           toast({
             title: `${habit.name} completed!`,
             description: habit.streak === 0 
@@ -138,6 +147,16 @@ export const HabitTracker: React.FC = () => {
           <span className="font-medium">{completedCount}/{habits.length} completed</span>
         </div>
         <Progress value={progressPercentage} className="h-2" />
+        
+        {completedCount === habits.length && habits.length > 0 && (
+          <div className="p-2 bg-primary/10 text-primary rounded-md text-sm flex justify-between items-center mt-2">
+            <span className="font-medium">All habits completed!</span>
+            <div className="flex items-center gap-1">
+              <Sparkles size={14} />
+              <span>+25 XP Bonus</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="rounded-md divide-y divide-border/50 bg-background/50 dark:bg-gray-900/20 backdrop-blur-sm">

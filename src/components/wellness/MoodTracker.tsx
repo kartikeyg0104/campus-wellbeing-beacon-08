@@ -22,6 +22,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useGamification } from '@/context/GamificationContext';
 
 const moodOptions = [
   { value: 5, label: 'Great', icon: Laugh, bgColor: 'bg-green-100 dark:bg-green-900/80', textColor: 'text-green-600 dark:text-green-400', ringColor: 'ring-green-500', borderColor: 'border-green-200 dark:border-green-800' },
@@ -37,6 +38,7 @@ export const MoodTracker: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const { toast } = useToast();
+  const { addXp, checkStreak, completeQuest } = useGamification();
 
   const handleSubmit = () => {
     if (selectedMood === null) {
@@ -50,8 +52,18 @@ export const MoodTracker: React.FC = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call
+    // Process the mood tracking
     setTimeout(() => {
+      // Award XP based on mood value (consistent XP regardless of mood)
+      const xpAmount = 20;
+      addXp(xpAmount, 'mood_check', 'Completed daily mood check-in');
+      
+      // Update streak
+      const streakUpdated = checkStreak();
+      
+      // Complete any related quests
+      completeQuest("quest_1"); // Daily mood check quest
+      
       toast({
         title: "Mood tracked successfully!",
         description: "Your mood has been recorded for today.",
@@ -114,8 +126,8 @@ export const MoodTracker: React.FC = () => {
                 }}
                 className={cn(
                   "absolute w-3 h-3 rounded-full",
-                  i % 5 === 0 ? "bg-primary" : 
-                  i % 5 === 1 ? "bg-secondary" : 
+                  i % 5 === 0 ? "bg-xp" : 
+                  i % 5 === 1 ? "bg-level" : 
                   i % 5 === 2 ? "bg-wellness-calm" : 
                   i % 5 === 3 ? "bg-wellness-energize" : 
                   "bg-wellness-balance"
