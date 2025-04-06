@@ -9,6 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { useTheme } from '@/context/ThemeProvider';
 
 // Sample time-of-day mood data
 const timeOfDayData = [
@@ -19,6 +20,14 @@ const timeOfDayData = [
 ];
 
 export const TimeOfDayChart: React.FC = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  // Define colors based on theme
+  const barColor = isDarkMode ? '#9b87f5' : 'hsl(var(--primary))';
+  const barGradientStart = isDarkMode ? '#9b87f5' : 'hsl(var(--primary))';
+  const barGradientEnd = isDarkMode ? '#7E69AB' : 'hsla(var(--primary), 0.4)';
+  
   return (
     <ResponsiveContainer width="100%" height="100%">
       <BarChart
@@ -51,13 +60,15 @@ export const TimeOfDayChart: React.FC = () => {
         />
         <defs>
           <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-            <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.4}/>
+            <stop offset="5%" stopColor={barGradientStart} stopOpacity={0.8}/>
+            <stop offset="95%" stopColor={barGradientEnd} stopOpacity={0.6}/>
           </linearGradient>
         </defs>
         <Bar 
           dataKey="mood" 
           fill="url(#barGradient)" 
+          stroke={barColor}
+          strokeWidth={1}
           name="Average Mood"
           radius={[4, 4, 0, 0]}
         />
