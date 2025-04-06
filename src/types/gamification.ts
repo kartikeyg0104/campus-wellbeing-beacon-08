@@ -20,7 +20,7 @@ export interface Badge {
   id: string;
   name: string;
   description: string;
-  icon: LucideIcon;
+  icon: React.ComponentType<any>; // Changed from LucideIcon to React.ComponentType<any> to be more explicit
   earnedOn?: Date;
   progress: number;
   total: number;

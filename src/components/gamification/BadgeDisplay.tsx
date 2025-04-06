@@ -10,6 +10,7 @@ import { Badge as BadgeType } from '@/types/gamification';
 import { Progress } from '@/components/ui/progress';
 import { Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import * as LucideIcons from 'lucide-react';
 
 interface BadgeDisplayProps {
   badge: BadgeType;
@@ -22,7 +23,8 @@ export const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
   size = 'md',
   showProgress = true
 }) => {
-  const BadgeIcon = badge.icon;
+  // Fixed: Properly handle the icon from badge.icon which is a LucideIcon reference
+  const BadgeIcon = badge.icon ? React.createElement(badge.icon) : null;
   const progressPercent = (badge.progress / badge.total) * 100;
   
   const getBadgeStyle = () => {
@@ -115,10 +117,12 @@ export const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
                 </div>
               )}
               
-              <BadgeIcon className={cn(
+              <div className={cn(
                 sizeClasses[size].icon,
                 badge.unlocked ? styles.textColor : "text-muted-foreground/50"
-              )} />
+              )}>
+                {BadgeIcon}
+              </div>
               
               {badge.unlocked && badge.progress >= badge.total && (
                 <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-primary text-primary-foreground text-[10px] rounded-full w-5 h-5 flex items-center justify-center border border-background">
