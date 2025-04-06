@@ -74,19 +74,19 @@ export function AppLayout() {
           "flex-1 flex flex-col transition-all duration-300",
           isSidebarOpen && !isMobile ? "ml-64" : "ml-0"
         )}>
-          <header className="border-b bg-background/80 backdrop-blur-sm h-16 w-full flex items-center justify-between px-4 lg:px-6 sticky top-0 z-10">
+          <header className="border-b bg-background/90 backdrop-blur-md h-16 w-full flex items-center justify-between px-4 lg:px-6 sticky top-0 z-10 shadow-sm">
             <div className="flex items-center gap-3">
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={toggleSidebar}
-                className="lg:hidden"
+                className="lg:hidden text-foreground hover:bg-muted"
               >
                 <Menu size={20} />
               </Button>
               
               <div className="flex items-center gap-2">
-                <h1 className="font-medium text-lg hidden md:block">
+                <h1 className="font-medium text-lg hidden md:block text-foreground">
                   {getPageTitle()}
                 </h1>
                 <ChevronRight size={16} className="text-muted-foreground hidden md:block" />
@@ -107,7 +107,7 @@ export function AppLayout() {
                 variant="ghost" 
                 size="icon" 
                 onClick={toggleTheme}
-                className="text-foreground/80 hover:text-foreground"
+                className="text-foreground/80 hover:text-foreground hover:bg-muted"
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </Button>
@@ -116,7 +116,7 @@ export function AppLayout() {
                 variant="ghost" 
                 size="icon" 
                 onClick={showNotification}
-                className="relative text-foreground/80 hover:text-foreground"
+                className="relative text-foreground/80 hover:text-foreground hover:bg-muted"
               >
                 <Bell size={18} />
                 {notificationCount > 0 && (
@@ -128,21 +128,21 @@ export function AppLayout() {
               
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="rounded-full h-9 w-9 border">
-                    <User size={18} />
+                  <Button variant="ghost" size="icon" className="rounded-full h-9 w-9 border border-border bg-muted/50 hover:bg-muted">
+                    <User size={18} className="text-foreground" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-56">
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link to="/app/profile">Profile</Link>
+                <DropdownMenuContent align="end" className="w-56 border border-border/60 bg-background/95 backdrop-blur-sm">
+                  <DropdownMenuLabel className="text-foreground">My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator className="bg-border/60" />
+                  <DropdownMenuItem asChild className="hover:bg-muted focus:bg-muted">
+                    <Link to="/app/profile" className="text-foreground cursor-pointer">Profile</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/app/settings">Settings</Link>
+                  <DropdownMenuItem asChild className="hover:bg-muted focus:bg-muted">
+                    <Link to="/app/settings" className="text-foreground cursor-pointer">Settings</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive">
+                  <DropdownMenuSeparator className="bg-border/60" />
+                  <DropdownMenuItem onClick={handleLogout} className="text-destructive focus:text-destructive hover:bg-destructive/10 focus:bg-destructive/10 cursor-pointer">
                     Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>

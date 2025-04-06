@@ -114,6 +114,14 @@ module.exports = {
           "0%, 100%": { boxShadow: "0 0 5px rgba(var(--primary-rgb), 0.4)" },
           "50%": { boxShadow: "0 0 15px rgba(var(--primary-rgb), 0.6)" },
         },
+        "fade-in-up": {
+          "0%": { opacity: 0, transform: "translateY(10px)" },
+          "100%": { opacity: 1, transform: "translateY(0)" },
+        },
+        "breathing": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -128,11 +136,16 @@ module.exports = {
         "shimmer": "shimmer 3s linear infinite",
         "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
         "glow": "glow 2s ease-in-out infinite",
+        "fade-in-up": "fade-in-up 0.5s ease-out forwards",
+        "breathing": "breathing 4s ease-in-out infinite",
       },
       boxShadow: {
         'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
         'glow': '0 0 15px rgba(var(--primary-rgb), 0.5)',
         'wellness': '0 8px 24px -12px rgba(var(--wellness-calm-rgb), 0.5)',
+        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'inner-glow': 'inset 0 0 5px rgba(var(--primary-rgb), 0.2)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -140,6 +153,8 @@ module.exports = {
         'gradient-focus': 'linear-gradient(120deg, hsl(var(--wellness-focus)) 0%, hsl(var(--wellness-balance)) 100%)',
         'pattern-dots': 'radial-gradient(currentColor 1px, transparent 1px)',
         'shimmer': 'linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)',
+        'card-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
+        'dark-card-gradient': 'linear-gradient(145deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%)',
       },
       backgroundSize: {
         'dots-sm': '20px 20px',

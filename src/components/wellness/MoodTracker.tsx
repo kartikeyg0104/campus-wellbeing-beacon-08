@@ -24,11 +24,11 @@ import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const moodOptions = [
-  { value: 5, label: 'Great', icon: Laugh, bgColor: 'bg-green-100 dark:bg-green-900/30', textColor: 'text-green-600 dark:text-green-400', ringColor: 'ring-green-500' },
-  { value: 4, label: 'Good', icon: Smile, bgColor: 'bg-emerald-100 dark:bg-emerald-900/30', textColor: 'text-emerald-600 dark:text-emerald-400', ringColor: 'ring-emerald-500' },
-  { value: 3, label: 'Okay', icon: Meh, bgColor: 'bg-yellow-100 dark:bg-yellow-900/30', textColor: 'text-yellow-600 dark:text-yellow-400', ringColor: 'ring-yellow-500' },
-  { value: 2, label: 'Not Great', icon: Frown, bgColor: 'bg-orange-100 dark:bg-orange-900/30', textColor: 'text-orange-600 dark:text-orange-400', ringColor: 'ring-orange-500' },
-  { value: 1, label: 'Struggling', icon: CloudRain, bgColor: 'bg-red-100 dark:bg-red-900/30', textColor: 'text-red-600 dark:text-red-400', ringColor: 'ring-red-500' },
+  { value: 5, label: 'Great', icon: Laugh, bgColor: 'bg-green-100 dark:bg-green-900/80', textColor: 'text-green-600 dark:text-green-400', ringColor: 'ring-green-500', borderColor: 'border-green-200 dark:border-green-800' },
+  { value: 4, label: 'Good', icon: Smile, bgColor: 'bg-emerald-100 dark:bg-emerald-900/80', textColor: 'text-emerald-600 dark:text-emerald-400', ringColor: 'ring-emerald-500', borderColor: 'border-emerald-200 dark:border-emerald-800' },
+  { value: 3, label: 'Okay', icon: Meh, bgColor: 'bg-yellow-100 dark:bg-yellow-900/80', textColor: 'text-yellow-600 dark:text-yellow-400', ringColor: 'ring-yellow-500', borderColor: 'border-yellow-200 dark:border-yellow-800' },
+  { value: 2, label: 'Not Great', icon: Frown, bgColor: 'bg-orange-100 dark:bg-orange-900/80', textColor: 'text-orange-600 dark:text-orange-400', ringColor: 'ring-orange-500', borderColor: 'border-orange-200 dark:border-orange-800' },
+  { value: 1, label: 'Struggling', icon: CloudRain, bgColor: 'bg-red-100 dark:bg-red-900/80', textColor: 'text-red-600 dark:text-red-400', ringColor: 'ring-red-500', borderColor: 'border-red-200 dark:border-red-800' },
 ];
 
 export const MoodTracker: React.FC = () => {
@@ -89,7 +89,7 @@ export const MoodTracker: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm relative overflow-hidden">
+    <Card className="w-full max-w-md mx-auto bg-white/90 dark:bg-gray-900/90 shadow-card hover:shadow-card-hover border backdrop-blur-sm relative overflow-hidden transition-all duration-300">
       {showConfetti && (
         <div className="absolute inset-0 pointer-events-none z-10">
           <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-[500px] h-[500px]">
@@ -126,28 +126,29 @@ export const MoodTracker: React.FC = () => {
         </div>
       )}
       
-      <CardHeader>
+      <CardHeader className="pb-2">
         <div className="flex items-center justify-between">
-          <CardTitle>Daily Mood Check-in</CardTitle>
-          <div className="flex items-center text-sm text-muted-foreground">
+          <CardTitle className="text-xl font-bold text-foreground">Daily Mood Check-in</CardTitle>
+          <div className="flex items-center text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
             <Calendar size={16} className="mr-1" />
             {today}
           </div>
         </div>
-        <CardDescription>
+        <CardDescription className="text-muted-foreground">
           How are you feeling today? Your responses are confidential.
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="flex justify-between mb-8">
+      <CardContent className="pt-2">
+        <div className="flex justify-between mb-8 gap-1">
           {moodOptions.map((mood) => (
             <motion.button
               key={mood.value}
               onClick={() => setSelectedMood(mood.value)}
               className={cn(
-                "mood-scale-item",
+                "mood-scale-item border-2",
                 mood.bgColor,
                 mood.textColor,
+                mood.borderColor,
                 "hover:scale-110 transition-all",
                 selectedMood === mood.value && `ring-2 ${mood.ringColor} ring-offset-2`
               )}
@@ -170,10 +171,10 @@ export const MoodTracker: React.FC = () => {
               className="overflow-hidden"
             >
               <div className={cn(
-                "p-3 rounded-lg mb-4 text-sm",
-                selectedMood >= 4 ? "bg-green-100/50 dark:bg-green-900/20 border border-green-200 dark:border-green-800" : 
-                selectedMood === 3 ? "bg-yellow-100/50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800" :
-                "bg-orange-100/50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800"
+                "p-3 rounded-lg mb-4 text-sm border",
+                selectedMood >= 4 ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-900/50 text-green-700 dark:text-green-400" : 
+                selectedMood === 3 ? "bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-900/50 text-yellow-700 dark:text-yellow-400" :
+                "bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-900/50 text-orange-700 dark:text-orange-400"
               )}>
                 {getMoodFeedback()}
               </div>
@@ -182,7 +183,7 @@ export const MoodTracker: React.FC = () => {
         </AnimatePresence>
 
         <div className="space-y-2">
-          <label htmlFor="notes" className="text-sm font-medium">
+          <label htmlFor="notes" className="text-sm font-medium text-foreground">
             What's on your mind today? (Optional)
           </label>
           <Textarea
@@ -191,14 +192,14 @@ export const MoodTracker: React.FC = () => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={4}
-            className="resize-none bg-background/50"
+            className="resize-none bg-white/50 dark:bg-gray-800/50 border-border focus:border-primary"
           />
         </div>
       </CardContent>
       <CardFooter>
         <Button 
           onClick={handleSubmit} 
-          className="w-full"
+          className="w-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
           disabled={isSubmitting}
         >
           {isSubmitting ? (

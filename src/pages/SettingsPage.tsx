@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -6,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { Settings, Bell, Lock, User, Shield, Moon, Sun } from 'lucide-react';
+import { Settings, Bell, Lock, User, Shield, Moon, Sun, Sparkles, Zap } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { useTheme } from '@/context/ThemeProvider';
 
@@ -22,7 +23,7 @@ const SettingsPage: React.FC = () => {
   };
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in-up">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
         <p className="text-muted-foreground">
@@ -31,17 +32,20 @@ const SettingsPage: React.FC = () => {
       </div>
       
       <Tabs defaultValue="general" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="general">General</TabsTrigger>
-          <TabsTrigger value="notifications">Notifications</TabsTrigger>
-          <TabsTrigger value="privacy">Privacy</TabsTrigger>
-          <TabsTrigger value="account">Account</TabsTrigger>
+        <TabsList className="bg-muted/80 backdrop-blur-sm border border-border/50 p-1">
+          <TabsTrigger value="general" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-foreground">General</TabsTrigger>
+          <TabsTrigger value="notifications" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-foreground">Notifications</TabsTrigger>
+          <TabsTrigger value="privacy" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-foreground">Privacy</TabsTrigger>
+          <TabsTrigger value="account" className="data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:text-foreground">Account</TabsTrigger>
         </TabsList>
         
-        <TabsContent value="general" className="space-y-4">
-          <Card>
+        <TabsContent value="general" className="space-y-4 animate-fade-in-up">
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Appearance</CardTitle>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5 text-primary" />
+                <CardTitle>Appearance</CardTitle>
+              </div>
               <CardDescription>
                 Customize how the application looks and feels.
               </CardDescription>
@@ -49,30 +53,30 @@ const SettingsPage: React.FC = () => {
             <CardContent className="space-y-4">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label>Theme</Label>
+                  <Label className="text-base">Theme</Label>
                   <div className="flex flex-wrap gap-4">
                     <Button 
                       variant={theme === 'light' ? "default" : "outline"} 
-                      className="flex gap-2" 
+                      className="flex gap-2 items-center border-2 hover:bg-muted/50" 
                       onClick={() => setTheme('light')}
                     >
-                      <Sun size={16} />
+                      <Sun size={16} className={theme === 'light' ? "text-primary-foreground" : "text-foreground"} />
                       Light
                     </Button>
                     <Button 
                       variant={theme === 'dark' ? "default" : "outline"} 
-                      className="flex gap-2" 
+                      className="flex gap-2 items-center border-2 hover:bg-muted/50" 
                       onClick={() => setTheme('dark')}
                     >
-                      <Moon size={16} />
+                      <Moon size={16} className={theme === 'dark' ? "text-primary-foreground" : "text-foreground"} />
                       Dark
                     </Button>
                     <Button 
                       variant={theme === 'system' ? "default" : "outline"} 
-                      className="flex gap-2" 
+                      className="flex gap-2 items-center border-2 hover:bg-muted/50" 
                       onClick={() => setTheme('system')}
                     >
-                      <Settings size={16} />
+                      <Settings size={16} className={theme === 'system' ? "text-primary-foreground" : "text-foreground"} />
                       System
                     </Button>
                   </div>
@@ -81,17 +85,20 @@ const SettingsPage: React.FC = () => {
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Accessibility</CardTitle>
+              <div className="flex items-center gap-2">
+                <Zap className="h-5 w-5 text-primary" />
+                <CardTitle>Accessibility</CardTitle>
+              </div>
               <CardDescription>
                 Adjust settings to improve your user experience.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="reduce-motion">Reduce motion</Label>
+                  <Label htmlFor="reduce-motion" className="text-foreground font-medium">Reduce motion</Label>
                   <p className="text-sm text-muted-foreground">
                     Limit the amount of animations and transitions.
                   </p>
@@ -102,18 +109,21 @@ const SettingsPage: React.FC = () => {
           </Card>
         </TabsContent>
         
-        <TabsContent value="notifications" className="space-y-4">
-          <Card>
+        <TabsContent value="notifications" className="space-y-4 animate-fade-in-up">
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Notification Preferences</CardTitle>
+              <div className="flex items-center gap-2">
+                <Bell className="h-5 w-5 text-primary" />
+                <CardTitle>Notification Preferences</CardTitle>
+              </div>
               <CardDescription>
                 Choose what notifications you receive and how.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="email-notifs">Email notifications</Label>
+                  <Label htmlFor="email-notifs" className="text-foreground font-medium">Email notifications</Label>
                   <p className="text-sm text-muted-foreground">
                     Receive notifications via email.
                   </p>
@@ -121,11 +131,11 @@ const SettingsPage: React.FC = () => {
                 <Switch id="email-notifs" defaultChecked />
               </div>
               
-              <Separator />
+              <Separator className="my-2" />
               
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="push-notifs">Push notifications</Label>
+                  <Label htmlFor="push-notifs" className="text-foreground font-medium">Push notifications</Label>
                   <p className="text-sm text-muted-foreground">
                     Receive notifications on your device.
                   </p>
@@ -133,11 +143,11 @@ const SettingsPage: React.FC = () => {
                 <Switch id="push-notifs" defaultChecked />
               </div>
               
-              <Separator />
+              <Separator className="my-2" />
               
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="mood-reminders">Mood tracking reminders</Label>
+                  <Label htmlFor="mood-reminders" className="text-foreground font-medium">Mood tracking reminders</Label>
                   <p className="text-sm text-muted-foreground">
                     Get reminded to track your mood regularly.
                   </p>
@@ -145,11 +155,11 @@ const SettingsPage: React.FC = () => {
                 <Switch id="mood-reminders" defaultChecked />
               </div>
               
-              <Separator />
+              <Separator className="my-2" />
               
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="wellness-tips">Wellness tips</Label>
+                  <Label htmlFor="wellness-tips" className="text-foreground font-medium">Wellness tips</Label>
                   <p className="text-sm text-muted-foreground">
                     Receive wellness tips and suggestions.
                   </p>
@@ -160,18 +170,21 @@ const SettingsPage: React.FC = () => {
           </Card>
         </TabsContent>
         
-        <TabsContent value="privacy" className="space-y-4">
-          <Card>
+        <TabsContent value="privacy" className="space-y-4 animate-fade-in-up">
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Privacy Settings</CardTitle>
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-primary" />
+                <CardTitle>Privacy Settings</CardTitle>
+              </div>
               <CardDescription>
                 Control how your data is used and shared.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="data-sharing">Data sharing</Label>
+                  <Label htmlFor="data-sharing" className="text-foreground font-medium">Data sharing</Label>
                   <p className="text-sm text-muted-foreground">
                     Allow anonymous data to be used for improving the service.
                   </p>
@@ -179,11 +192,11 @@ const SettingsPage: React.FC = () => {
                 <Switch id="data-sharing" />
               </div>
               
-              <Separator />
+              <Separator className="my-2" />
               
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/30 transition-colors">
                 <div>
-                  <Label htmlFor="public-profile">Public profile</Label>
+                  <Label htmlFor="public-profile" className="text-foreground font-medium">Public profile</Label>
                   <p className="text-sm text-muted-foreground">
                     Make your achievements visible to other users.
                   </p>
@@ -194,53 +207,62 @@ const SettingsPage: React.FC = () => {
           </Card>
         </TabsContent>
         
-        <TabsContent value="account" className="space-y-4">
-          <Card>
+        <TabsContent value="account" className="space-y-4 animate-fade-in-up">
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Account Information</CardTitle>
+              <div className="flex items-center gap-2">
+                <User className="h-5 w-5 text-primary" />
+                <CardTitle>Account Information</CardTitle>
+              </div>
               <CardDescription>
                 Update your account details.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" defaultValue="Jane Doe" />
+                <Label htmlFor="name" className="text-foreground">Name</Label>
+                <Input id="name" defaultValue="Jane Doe" className="bg-background/50" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" defaultValue="jane.doe@example.com" />
+                <Label htmlFor="email" className="text-foreground">Email</Label>
+                <Input id="email" type="email" defaultValue="jane.doe@example.com" className="bg-background/50" />
               </div>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Password</CardTitle>
+              <div className="flex items-center gap-2">
+                <Lock className="h-5 w-5 text-primary" />
+                <CardTitle>Password</CardTitle>
+              </div>
               <CardDescription>
                 Change your password.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="current-password">Current password</Label>
-                <Input id="current-password" type="password" />
+                <Label htmlFor="current-password" className="text-foreground">Current password</Label>
+                <Input id="current-password" type="password" className="bg-background/50" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="new-password">New password</Label>
-                <Input id="new-password" type="password" />
+                <Label htmlFor="new-password" className="text-foreground">New password</Label>
+                <Input id="new-password" type="password" className="bg-background/50" />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirm-password">Confirm password</Label>
-                <Input id="confirm-password" type="password" />
+                <Label htmlFor="confirm-password" className="text-foreground">Confirm password</Label>
+                <Input id="confirm-password" type="password" className="bg-background/50" />
               </div>
               <Button className="mt-4">Change Password</Button>
             </CardContent>
           </Card>
           
-          <Card>
+          <Card className="border border-border bg-card/95 backdrop-blur-sm">
             <CardHeader>
-              <CardTitle>Danger Zone</CardTitle>
+              <div className="flex items-center gap-2">
+                <Shield className="h-5 w-5 text-destructive" />
+                <CardTitle className="text-destructive">Danger Zone</CardTitle>
+              </div>
               <CardDescription>
                 Irreversible and destructive actions.
               </CardDescription>
@@ -253,7 +275,7 @@ const SettingsPage: React.FC = () => {
       </Tabs>
       
       <div className="flex justify-end">
-        <Button onClick={saveSettings}>Save Changes</Button>
+        <Button onClick={saveSettings} className="bg-primary hover:bg-primary/90 text-primary-foreground">Save Changes</Button>
       </div>
     </div>
   );
