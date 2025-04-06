@@ -39,6 +39,7 @@ import {
   Tooltip,
   ResponsiveContainer
 } from 'recharts';
+import { useTheme } from '@/context/ThemeProvider';
 
 const weeklyMoodData = [
   { day: 'Mon', value: 35 },
@@ -52,8 +53,13 @@ const weeklyMoodData = [
 
 const Dashboard: React.FC = () => {
   const { user } = useAuth();
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
   const timeOfDay = getTimeOfDay();
   const [loaded, setLoaded] = useState(false);
+
+  const barColor = isDarkMode ? '#9b87f5' : 'hsl(var(--primary))';
+  const hoverBarColor = isDarkMode ? '#a594f8' : 'hsl(var(--primary))';
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -100,7 +106,7 @@ const Dashboard: React.FC = () => {
       label: "Mood",
       theme: {
         light: "hsl(var(--primary))",
-        dark: "hsl(var(--primary))"
+        dark: isDarkMode ? "#9b87f5" : "hsl(var(--primary))"
       }
     }
   };
@@ -270,9 +276,17 @@ const Dashboard: React.FC = () => {
                           domain={[0, 100]} 
                         />
                         <Tooltip content={<CustomTooltip />} cursor={false} />
+                        <defs>
+                          <linearGradient id="moodBarGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor={barColor} stopOpacity={0.8}/>
+                            <stop offset="95%" stopColor={barColor} stopOpacity={0.5}/>
+                          </linearGradient>
+                        </defs>
                         <Bar 
                           dataKey="value" 
-                          fill="var(--primary)" 
+                          fill="url(#moodBarGradient)" 
+                          stroke={barColor}
+                          strokeWidth={1}
                           radius={[4, 4, 0, 0]}
                           barSize={30} 
                           name="mood"

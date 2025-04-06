@@ -18,6 +18,7 @@ import {
   AreaChart,
   Area,
 } from 'recharts';
+import { useTheme } from '@/context/ThemeProvider';
 
 // Sample mood data for the past week
 const moodData = [
@@ -39,6 +40,13 @@ const wellnessMetrics = [
 ];
 
 export const WellnessStats: React.FC = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  // Define colors based on theme
+  const moodColor = isDarkMode ? '#9b87f5' : 'hsl(var(--primary))';
+  const stressColor = isDarkMode ? '#f87171' : 'hsl(var(--destructive))';
+
   return (
     <div className="space-y-4">
       <Card>
@@ -62,12 +70,12 @@ export const WellnessStats: React.FC = () => {
               >
                 <defs>
                   <linearGradient id="colorMood" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0.1}/>
+                    <stop offset="5%" stopColor={moodColor} stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor={moodColor} stopOpacity={0.1}/>
                   </linearGradient>
                   <linearGradient id="colorStress" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="hsl(var(--destructive))" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="hsl(var(--destructive))" stopOpacity={0.1}/>
+                    <stop offset="5%" stopColor={stressColor} stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor={stressColor} stopOpacity={0.1}/>
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" opacity={0.3} stroke="var(--border)" />
@@ -96,7 +104,7 @@ export const WellnessStats: React.FC = () => {
                 <Area 
                   type="monotone" 
                   dataKey="mood" 
-                  stroke="hsl(var(--primary))" 
+                  stroke={moodColor} 
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#colorMood)"
@@ -106,7 +114,7 @@ export const WellnessStats: React.FC = () => {
                 <Area 
                   type="monotone" 
                   dataKey="stress" 
-                  stroke="hsl(var(--destructive))" 
+                  stroke={stressColor} 
                   strokeWidth={2}
                   fillOpacity={1}
                   fill="url(#colorStress)"

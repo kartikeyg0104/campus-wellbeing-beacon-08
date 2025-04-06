@@ -50,15 +50,15 @@ export const MoodAnalytics: React.FC = () => {
             </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="daily" className="h-72">
+          <TabsContent value="daily" className="h-72 bg-card/50 rounded-md border p-2">
             <DailyTrendChart />
           </TabsContent>
 
-          <TabsContent value="monthly" className="h-72">
+          <TabsContent value="monthly" className="h-72 bg-card/50 rounded-md border p-2">
             <MonthlyAverageChart />
           </TabsContent>
 
-          <TabsContent value="timeOfDay" className="h-72">
+          <TabsContent value="timeOfDay" className="h-72 bg-card/50 rounded-md border p-2">
             <TimeOfDayChart />
           </TabsContent>
         </Tabs>
