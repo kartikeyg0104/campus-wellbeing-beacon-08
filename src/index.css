@@ -63,7 +63,7 @@
 
 @layer components {
   .mood-scale-item {
-    @apply flex flex-col items-center justify-center rounded-xl p-2 sm:p-3 transition-all cursor-pointer w-full;
+    @apply flex flex-col items-center justify-center rounded-xl p-3 transition-all cursor-pointer w-full;
   }
   
   .xp-progress-bar {
@@ -75,7 +75,7 @@
   }
 
   .streak-flame {
-    @apply text-[#F97316] bg-opacity-10 bg-[#F97316] rounded-full p-1.5 flex items-center justify-center relative;
+    @apply text-[#FF6B00] bg-[#FF6B00]/10 rounded-full p-1.5 flex items-center justify-center relative;
   }
 
   .badge-icon {
@@ -83,15 +83,15 @@
   }
 
   .quest-card {
-    @apply border p-3 sm:p-4 rounded-lg hover:shadow-md transition-shadow bg-card;
+    @apply border p-4 rounded-lg hover:shadow-md transition-shadow bg-card;
   }
   
   .milestone-node {
-    @apply w-4 h-4 sm:w-6 sm:h-6 rounded-full flex items-center justify-center z-10;
+    @apply w-6 h-6 rounded-full flex items-center justify-center z-10;
   }
   
   .milestone-connector {
-    @apply absolute h-0.5 top-2 sm:top-3 z-0;
+    @apply absolute h-0.5 top-3 z-0;
   }
 }
 
@@ -107,34 +107,4 @@
   .animate-scale-pulse {
     animation: scale-pulse 2s infinite;
   }
-
-  /* Screen size helpers */
-  @variants responsive {
-    .text-xs-auto {
-      font-size: clamp(0.75rem, 2vw, 0.875rem);
-    }
-    
-    .text-sm-auto {
-      font-size: clamp(0.875rem, 2.5vw, 1rem);
-    }
-    
-    .text-base-auto {
-      font-size: clamp(1rem, 3vw, 1.125rem);
-    }
-  }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-@keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-@keyframes scale-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
 }

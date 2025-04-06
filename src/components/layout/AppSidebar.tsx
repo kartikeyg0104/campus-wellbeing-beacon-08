@@ -35,7 +35,7 @@ import { XpIndicator } from '../gamification/XpIndicator';
 import { StreakCounter } from '../gamification/StreakCounter';
 
 const mainMenuItems = [
-  { title: 'Dashboard', icon: Home, path: '/app' },
+  { title: 'Dashboard', icon: Home, path: '/app/dashboard' },
   { title: 'Mood Tracker', icon: Activity, path: '/app/mood' },
   { title: 'Habits', icon: Calendar, path: '/app/habits' },
   { title: 'Analytics', icon: BarChart2, path: '/app/analytics' },

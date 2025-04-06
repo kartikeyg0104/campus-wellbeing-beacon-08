@@ -58,13 +58,16 @@ const App = () => (
                 {/* Login Route */}
                 <Route path="/" element={<LoginPage />} />
                 
+                {/* Redirect root/app to dashboard */}
+                <Route path="/app" element={<Navigate to="/app/dashboard" replace />} />
+
                 {/* App Routes (Protected) */}
                 <Route element={
                   <ProtectedRoute>
                     <AppLayout />
                   </ProtectedRoute>
                 }>
-                  <Route path="/app" element={<Dashboard />} />
+                  <Route path="/app/dashboard" element={<Dashboard />} />
                   <Route path="/app/mood" element={<MoodTrackerPage />} />
                   <Route path="/app/habits" element={<HabitsPage />} />
                   <Route path="/app/journal" element={<JournalPage />} />

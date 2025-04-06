@@ -18,13 +18,13 @@ const NotFound: React.FC = () => {
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
           <Button asChild variant="outline" className="gap-2">
-            <Link to="/">
+            <Link to="/app/dashboard">
               <ArrowLeft size={16} />
               Go Back
             </Link>
           </Button>
           <Button asChild className="gap-2">
-            <Link to="/">
+            <Link to="/app/dashboard">
               <Home size={16} />
               Dashboard
             </Link>

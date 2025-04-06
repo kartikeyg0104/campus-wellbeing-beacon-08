@@ -3,13 +3,20 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-  ],
-  prefix: "",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
+	],
   theme: {
+    screens: {
+      'xs': '480px',
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -52,13 +59,11 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        wellness: {
-          calm: "hsl(var(--wellness-calm))",
-          energize: "hsl(var(--wellness-energize))",
-          soothe: "hsl(var(--wellness-soothe))",
-          focus: "hsl(var(--wellness-focus))",
-          balance: "hsl(var(--wellness-balance))",
-        },
+        // Add gamification colors
+        xp: "#FFB800",
+        level: "#8B5CF6",
+        streak: "#FF6B00",
+        badge: "#0EA5E9",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -74,149 +79,27 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
         "pulse-gentle": {
           "0%, 100%": { opacity: 1 },
-          "50%": { opacity: 0.8 },
+          "50%": { opacity: 0.7 },
         },
         "slide-in-bottom": {
           "0%": { transform: "translateY(20px)", opacity: 0 },
           "100%": { transform: "translateY(0)", opacity: 1 },
         },
-        "slide-in-left": {
-          "0%": { transform: "translateX(-20px)", opacity: 0 },
-          "100%": { transform: "translateX(0)", opacity: 1 },
-        },
-        "slide-in-right": {
-          "0%": { transform: "translateX(20px)", opacity: 0 },
-          "100%": { transform: "translateX(0)", opacity: 1 },
-        },
-        "scale-in": {
-          "0%": { transform: "scale(0.9)", opacity: 0 },
-          "100%": { transform: "scale(1)", opacity: 1 },
-        },
-        "ripple": {
-          "0%": { transform: "scale(0)", opacity: 0.6 },
-          "100%": { transform: "scale(2)", opacity: 0 },
-        },
-        "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
-        },
-        "bounce-subtle": {
+        "float": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-3px)" },
-        },
-        "glow": {
-          "0%, 100%": { boxShadow: "0 0 5px rgba(var(--primary-rgb), 0.4)" },
-          "50%": { boxShadow: "0 0 15px rgba(var(--primary-rgb), 0.6)" },
-        },
-        "fade-in-up": {
-          "0%": { opacity: 0, transform: "translateY(10px)" },
-          "100%": { opacity: 1, transform: "translateY(0)" },
-        },
-        "breathing": {
-          "0%, 100%": { transform: "scale(1)" },
-          "50%": { transform: "scale(1.05)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 4s ease-in-out infinite",
-        "pulse-gentle": "pulse-gentle 3s ease-in-out infinite",
-        "slide-in-bottom": "slide-in-bottom 0.6s ease-out",
-        "slide-in-left": "slide-in-left 0.6s ease-out",
-        "slide-in-right": "slide-in-right 0.6s ease-out",
-        "scale-in": "scale-in 0.5s ease-out",
-        "ripple": "ripple 0.8s ease-out",
-        "shimmer": "shimmer 3s linear infinite",
-        "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
-        "glow": "glow 2s ease-in-out infinite",
-        "fade-in-up": "fade-in-up 0.5s ease-out forwards",
-        "breathing": "breathing 4s ease-in-out infinite",
-      },
-      boxShadow: {
-        'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
-        'glow': '0 0 15px rgba(var(--primary-rgb), 0.5)',
-        'wellness': '0 8px 24px -12px rgba(var(--wellness-calm-rgb), 0.5)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
-        'inner-glow': 'inset 0 0 5px rgba(var(--primary-rgb), 0.2)',
-        'contrast-light': '0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.1)',
-        'contrast-dark': '0 4px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2)',
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-wellness': 'linear-gradient(120deg, hsl(var(--wellness-calm)) 0%, hsl(var(--wellness-soothe)) 100%)',
-        'gradient-focus': 'linear-gradient(120deg, hsl(var(--wellness-focus)) 0%, hsl(var(--wellness-balance)) 100%)',
-        'pattern-dots': 'radial-gradient(currentColor 1px, transparent 1px)',
-        'shimmer': 'linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)',
-        'card-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
-        'dark-card-gradient': 'linear-gradient(145deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%)',
-        'high-contrast-light': 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(240,240,240,1))',
-        'high-contrast-dark': 'linear-gradient(to bottom, rgba(30,30,30,1), rgba(20,20,20,1))',
-      },
-      backgroundSize: {
-        'dots-sm': '20px 20px',
-        'shimmer': '200% 100%',
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: '65ch',
-            color: 'hsl(var(--foreground))',
-            p: {
-              color: 'hsl(var(--foreground))',
-            },
-            h1: {
-              color: 'hsl(var(--foreground))',
-            },
-            h2: {
-              color: 'hsl(var(--foreground))',
-            },
-            h3: {
-              color: 'hsl(var(--foreground))',
-            },
-            h4: {
-              color: 'hsl(var(--foreground))',
-            },
-            h5: {
-              color: 'hsl(var(--foreground))',
-            },
-            h6: {
-              color: 'hsl(var(--foreground))',
-            },
-            strong: {
-              color: 'hsl(var(--foreground))',
-            },
-            blockquote: {
-              color: 'hsl(var(--foreground))',
-            },
-            ul: {
-              li: {
-                '&::marker': {
-                  color: 'hsl(var(--primary))',
-                },
-              },
-            },
-            ol: {
-              li: {
-                '&::marker': {
-                  color: 'hsl(var(--primary))',
-                },
-              },
-            },
-            code: {
-              color: 'hsl(var(--primary))',
-            },
-          },
-        },
+        "pulse-gentle": "pulse-gentle 2s infinite",
+        "slide-in-bottom": "slide-in-bottom 0.4s ease-out",
+        "float": "float 3s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require('@tailwindcss/typography')],
+  plugins: [require("tailwindcss-animate")],
 }

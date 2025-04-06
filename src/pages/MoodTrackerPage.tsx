@@ -20,7 +20,7 @@ const MoodTrackerPage: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
+      <div className="grid gap-6 grid-cols-1 lg:grid-cols-2">
         <motion.div
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
