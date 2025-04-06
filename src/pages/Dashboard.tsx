@@ -7,13 +7,14 @@ import { LevelProgressBar } from '@/components/gamification/LevelProgressBar';
 import { QuestCard } from '@/components/gamification/QuestCard';
 import { ResourceCard } from '@/components/resources/ResourceCard';
 import { useGamification } from '@/context/GamificationContext';
+import { resources } from '@/data/resources'; // Import the resources data
 
 const Dashboard: React.FC = () => {
   const { gameState } = useGamification();
   
-  // Get quests and resources from gameState
+  // Get quests from gameState and resources from imported data
   const activeQuests = gameState.quests.filter(quest => !quest.completed);
-  const recommendedResources = gameState.resources?.slice(0, 2) || [];
+  const recommendedResources = resources.slice(0, 2); // Get first 2 resources from the imported data
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
