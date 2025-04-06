@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from './AppSidebar';
 import { 
@@ -34,6 +34,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 export function AppLayout() {
   const { toast } = useToast();
   const location = useLocation();
+  const navigate = useNavigate();
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuth();
   const isMobile = useIsMobile();
@@ -59,6 +60,10 @@ export function AppLayout() {
 
   const handleLogout = () => {
     logout();
+  };
+  
+  const goToNotifications = () => {
+    navigate('/app/notifications');
   };
 
   // Get current page title from path
@@ -120,7 +125,7 @@ export function AppLayout() {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                onClick={showNotification}
+                onClick={goToNotifications}
                 className="relative text-card-foreground hover:text-card-foreground hover:bg-muted"
               >
                 <Bell size={18} />

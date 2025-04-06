@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from '@/components/ui/badge';
 import { Bell, Calendar, CheckCircle, Info, AlertTriangle } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 interface Notification {
   id: string;
@@ -69,14 +70,29 @@ const notifications: Notification[] = [
 
 const NotificationsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const { toast } = useToast();
+  const [notificationsList, setNotificationsList] = useState<Notification[]>(notifications);
   
-  const filteredNotifications = notifications.filter(notification => {
+  const filteredNotifications = notificationsList.filter(notification => {
     if (activeTab === 'all') return true;
     if (activeTab === 'unread') return !notification.read;
     return notification.type === activeTab;
   });
 
-  const unreadCount = notifications.filter(notification => !notification.read).length;
+  const unreadCount = notificationsList.filter(notification => !notification.read).length;
+
+  const markAllAsRead = () => {
+    const updatedNotifications = notificationsList.map(notification => ({
+      ...notification,
+      read: true
+    }));
+    setNotificationsList(updatedNotifications);
+    
+    toast({
+      title: "Notifications marked as read",
+      description: "All notifications have been marked as read."
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -87,7 +103,7 @@ const NotificationsPage: React.FC = () => {
             Stay updated with important information and reminders.
           </p>
         </div>
-        <Button variant="outline">Mark all as read</Button>
+        <Button variant="outline" onClick={markAllAsRead}>Mark all as read</Button>
       </div>
       
       <Tabs 
