@@ -69,7 +69,7 @@ export const StreakCounter: React.FC<StreakCounterProps> = ({
             />
             {gameState.streak.currentStreak >= 7 && (
               <motion.div 
-                className="absolute top-0 left-0 w-full h-full bg-streak/10 rounded-full"
+                className="absolute top-0 left-0 w-full h-full bg-[#F97316] bg-opacity-10 rounded-full"
                 animate={{ 
                   scale: [1, 1.5, 1],
                   opacity: [0.7, 0, 0.7] 

@@ -75,7 +75,7 @@
   }
 
   .streak-flame {
-    @apply text-streak bg-streak/10 rounded-full p-1.5 flex items-center justify-center relative;
+    @apply text-[#F97316] bg-opacity-10 bg-[#F97316] rounded-full p-1.5 flex items-center justify-center relative;
   }
 
   .badge-icon {
