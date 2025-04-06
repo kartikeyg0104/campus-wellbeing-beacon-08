@@ -57,7 +57,7 @@ export default {
         },
         xp: "#8B5CF6",
         level: "#0EA5E9",
-        streak: "#F97316",
+        streak: "#F97316",  // Ensure this color is explicitly defined
         badge: "#D946EF",
         quest: "#10B981",
       },
