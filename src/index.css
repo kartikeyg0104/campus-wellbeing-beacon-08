@@ -125,6 +125,10 @@
     @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-xl border border-white/20 dark:border-gray-700/20 shadow-soft;
   }
   
+  .shimmer-effect {
+    @apply relative overflow-hidden before:absolute before:inset-0 before:bg-shimmer before:bg-shimmer before:animate-shimmer;
+  }
+  
   .streak-badge {
     @apply inline-flex items-center justify-center px-2 py-1 text-xs font-medium rounded-full bg-accent text-primary;
   }
@@ -160,10 +164,30 @@
   .dotted-pattern {
     @apply bg-pattern-dots bg-dots-sm;
   }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary via-primary/90 to-secondary bg-clip-text text-transparent;
+  }
+  
+  .gradient-border {
+    @apply relative before:absolute before:inset-0 before:p-[1px] before:bg-gradient-to-r before:from-primary/50 before:to-secondary/50 before:rounded-lg before:-z-10;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+  
+  .animate-hover-float {
+    transition: transform 0.3s ease;
+  }
+  
+  .animate-hover-float:hover {
+    transform: translateY(-5px);
+  }
+
+  .mask-linear-gradient {
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
   }
 }

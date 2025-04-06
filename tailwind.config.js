@@ -101,7 +101,19 @@ module.exports = {
         "ripple": {
           "0%": { transform: "scale(0)", opacity: 0.6 },
           "100%": { transform: "scale(2)", opacity: 0 },
-        }
+        },
+        "shimmer": {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "bounce-subtle": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-3px)" },
+        },
+        "glow": {
+          "0%, 100%": { boxShadow: "0 0 5px rgba(var(--primary-rgb), 0.4)" },
+          "50%": { boxShadow: "0 0 15px rgba(var(--primary-rgb), 0.6)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -112,7 +124,10 @@ module.exports = {
         "slide-in-left": "slide-in-left 0.6s ease-out",
         "slide-in-right": "slide-in-right 0.6s ease-out",
         "scale-in": "scale-in 0.5s ease-out",
-        "ripple": "ripple 0.8s ease-out"
+        "ripple": "ripple 0.8s ease-out",
+        "shimmer": "shimmer 3s linear infinite",
+        "bounce-subtle": "bounce-subtle 2s ease-in-out infinite",
+        "glow": "glow 2s ease-in-out infinite",
       },
       boxShadow: {
         'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
@@ -124,9 +139,11 @@ module.exports = {
         'gradient-wellness': 'linear-gradient(120deg, hsl(var(--wellness-calm)) 0%, hsl(var(--wellness-soothe)) 100%)',
         'gradient-focus': 'linear-gradient(120deg, hsl(var(--wellness-focus)) 0%, hsl(var(--wellness-balance)) 100%)',
         'pattern-dots': 'radial-gradient(currentColor 1px, transparent 1px)',
+        'shimmer': 'linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)',
       },
       backgroundSize: {
         'dots-sm': '20px 20px',
+        'shimmer': '200% 100%',
       },
       typography: {
         DEFAULT: {
