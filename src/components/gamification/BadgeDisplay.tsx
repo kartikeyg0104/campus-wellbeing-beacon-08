@@ -83,75 +83,77 @@ export const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
   
   const sizeClasses = {
     sm: {
-      wrapper: "w-12 h-12",
-      icon: "w-5 h-5"
+      wrapper: "w-10 h-10 sm:w-12 sm:h-12",
+      icon: "w-4 h-4 sm:w-5 sm:h-5"
     },
     md: {
-      wrapper: "w-16 h-16",
-      icon: "w-7 h-7"
+      wrapper: "w-14 h-14 sm:w-16 sm:h-16",
+      icon: "w-6 h-6 sm:w-7 sm:h-7"
     },
     lg: {
-      wrapper: "w-20 h-20",
-      icon: "w-9 h-9"
+      wrapper: "w-16 h-16 sm:w-20 sm:h-20",
+      icon: "w-8 h-8 sm:w-9 sm:h-9"
     }
   };
   
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <div className="flex flex-col items-center gap-1">
-          <div 
-            className={cn(
-              "badge-icon rounded-full flex items-center justify-center border-2 relative",
-              badge.unlocked ? styles.bgColor : "bg-muted/50 dark:bg-muted/20",
-              badge.unlocked ? styles.borderColor : "border-border",
-              sizeClasses[size].wrapper
-            )}
-          >
-            {!badge.unlocked && (
-              <div className="absolute inset-0 bg-background/50 dark:bg-background/60 rounded-full flex items-center justify-center backdrop-blur-sm">
-                <Lock size={16} className="text-muted-foreground" />
-              </div>
-            )}
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex flex-col items-center gap-1">
+            <div 
+              className={cn(
+                "badge-icon rounded-full flex items-center justify-center border-2 relative",
+                badge.unlocked ? styles.bgColor : "bg-muted/50 dark:bg-muted/20",
+                badge.unlocked ? styles.borderColor : "border-border",
+                sizeClasses[size].wrapper
+              )}
+            >
+              {!badge.unlocked && (
+                <div className="absolute inset-0 bg-background/50 dark:bg-background/60 rounded-full flex items-center justify-center backdrop-blur-sm">
+                  <Lock size={16} className="text-muted-foreground" />
+                </div>
+              )}
+              
+              <BadgeIcon className={cn(
+                sizeClasses[size].icon,
+                badge.unlocked ? styles.textColor : "text-muted-foreground/50"
+              )} />
+              
+              {badge.unlocked && badge.progress >= badge.total && (
+                <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-primary text-primary-foreground text-[10px] rounded-full w-5 h-5 flex items-center justify-center border border-background">
+                  ✓
+                </div>
+              )}
+            </div>
             
-            <BadgeIcon className={cn(
-              sizeClasses[size].icon,
-              badge.unlocked ? styles.textColor : "text-muted-foreground/50"
-            )} />
-            
-            {badge.unlocked && badge.progress >= badge.total && (
-              <div className="absolute top-0 right-0 transform translate-x-1/4 -translate-y-1/4 bg-primary text-primary-foreground text-[10px] rounded-full w-5 h-5 flex items-center justify-center border border-background">
-                ✓
+            {showProgress && !badge.unlocked && (
+              <div className="w-full mt-1">
+                <Progress 
+                  value={progressPercent} 
+                  className={cn("h-1 w-10 sm:w-12", styles.progressColor)}
+                />
               </div>
             )}
           </div>
-          
-          {showProgress && !badge.unlocked && (
-            <div className="w-full mt-1">
-              <Progress 
-                value={progressPercent} 
-                className={cn("h-1 w-12", styles.progressColor)}
-              />
-            </div>
-          )}
-        </div>
-      </TooltipTrigger>
-      <TooltipContent>
-        <div className="text-center space-y-1">
-          <p className="font-bold">{badge.name}</p>
-          <p className="text-xs text-muted-foreground">{badge.description}</p>
-          {!badge.unlocked && (
-            <p className="text-xs mt-1">
-              Progress: {badge.progress}/{badge.total}
-            </p>
-          )}
-          {badge.unlocked && badge.earnedOn && (
-            <p className="text-xs text-muted-foreground mt-1">
-              Earned on {badge.earnedOn.toLocaleDateString()}
-            </p>
-          )}
-        </div>
-      </TooltipContent>
-    </Tooltip>
+        </TooltipTrigger>
+        <TooltipContent>
+          <div className="text-center space-y-1 max-w-[200px] sm:max-w-none">
+            <p className="font-bold text-sm sm:text-base">{badge.name}</p>
+            <p className="text-xs text-muted-foreground">{badge.description}</p>
+            {!badge.unlocked && (
+              <p className="text-xs mt-1">
+                Progress: {badge.progress}/{badge.total}
+              </p>
+            )}
+            {badge.unlocked && badge.earnedOn && (
+              <p className="text-xs text-muted-foreground mt-1">
+                Earned on {badge.earnedOn.toLocaleDateString()}
+              </p>
+            )}
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };

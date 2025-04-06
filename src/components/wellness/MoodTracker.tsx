@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -101,7 +100,7 @@ export const MoodTracker: React.FC = () => {
   };
 
   return (
-    <Card className="w-full max-w-md mx-auto bg-white/90 dark:bg-gray-900/90 shadow-card hover:shadow-card-hover border backdrop-blur-sm relative overflow-hidden transition-all duration-300">
+    <Card className="w-full max-w-full sm:max-w-md mx-auto bg-white/90 dark:bg-gray-900/90 shadow-card hover:shadow-card-hover border backdrop-blur-sm relative overflow-hidden transition-all duration-300">
       {showConfetti && (
         <div className="absolute inset-0 pointer-events-none z-10">
           <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 w-[500px] h-[500px]">
@@ -139,10 +138,10 @@ export const MoodTracker: React.FC = () => {
       )}
       
       <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-xl font-bold text-foreground">Daily Mood Check-in</CardTitle>
-          <div className="flex items-center text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
-            <Calendar size={16} className="mr-1" />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+          <CardTitle className="text-lg sm:text-xl font-bold text-foreground">Daily Mood Check-in</CardTitle>
+          <div className="flex items-center text-xs sm:text-sm text-muted-foreground bg-muted/50 px-2 py-1 rounded-md">
+            <Calendar size={14} className="mr-1" />
             {today}
           </div>
         </div>
@@ -151,7 +150,7 @@ export const MoodTracker: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="pt-2">
-        <div className="flex justify-between mb-8 gap-1">
+        <div className="flex justify-between mb-6 sm:mb-8 gap-1">
           {moodOptions.map((mood) => (
             <motion.button
               key={mood.value}
@@ -168,8 +167,8 @@ export const MoodTracker: React.FC = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
             >
-              <mood.icon size={24} />
-              <span className="text-xs mt-1 font-medium">{mood.label}</span>
+              <mood.icon size={20} className="sm:text-2xl" />
+              <span className="text-[10px] sm:text-xs mt-1 font-medium">{mood.label}</span>
             </motion.button>
           ))}
         </div>
@@ -183,7 +182,7 @@ export const MoodTracker: React.FC = () => {
               className="overflow-hidden"
             >
               <div className={cn(
-                "p-3 rounded-lg mb-4 text-sm border",
+                "p-2 sm:p-3 rounded-lg mb-4 text-xs sm:text-sm border",
                 selectedMood >= 4 ? "bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-900/50 text-green-700 dark:text-green-400" : 
                 selectedMood === 3 ? "bg-yellow-50 dark:bg-yellow-950/30 border-yellow-200 dark:border-yellow-900/50 text-yellow-700 dark:text-yellow-400" :
                 "bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-900/50 text-orange-700 dark:text-orange-400"
@@ -195,7 +194,7 @@ export const MoodTracker: React.FC = () => {
         </AnimatePresence>
 
         <div className="space-y-2">
-          <label htmlFor="notes" className="text-sm font-medium text-foreground">
+          <label htmlFor="notes" className="text-xs sm:text-sm font-medium text-foreground">
             What's on your mind today? (Optional)
           </label>
           <Textarea
@@ -203,8 +202,8 @@ export const MoodTracker: React.FC = () => {
             placeholder="Share your thoughts, challenges, or victories..."
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
-            rows={4}
-            className="resize-none bg-white/50 dark:bg-gray-800/50 border-border focus:border-primary"
+            rows={3}
+            className="resize-none bg-white/50 dark:bg-gray-800/50 border-border focus:border-primary text-xs sm:text-sm"
           />
         </div>
       </CardContent>

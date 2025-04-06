@@ -39,6 +39,11 @@ export function AppLayout() {
   const isMobile = useIsMobile();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(!isMobile);
   
+  // Close sidebar by default on smaller screens
+  React.useEffect(() => {
+    setIsSidebarOpen(!isMobile);
+  }, [isMobile]);
+  
   const showNotification = () => {
     toast({
       title: "New wellness tip!",
@@ -71,8 +76,8 @@ export function AppLayout() {
       <div className="min-h-screen flex w-full bg-background">
         <AppSidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
         <div className={cn(
-          "flex-1 flex flex-col transition-all duration-300",
-          isSidebarOpen && !isMobile ? "ml-64" : "ml-0"
+          "flex-1 flex flex-col transition-all duration-300 w-full",
+          isSidebarOpen && !isMobile ? "ml-64 lg:ml-64" : "ml-0"
         )}>
           <header className="border-b bg-card/95 backdrop-blur-md h-16 w-full flex items-center justify-between px-4 lg:px-6 sticky top-0 z-10 shadow-sm">
             <div className="flex items-center gap-3">
@@ -80,17 +85,17 @@ export function AppLayout() {
                 variant="ghost" 
                 size="icon" 
                 onClick={toggleSidebar}
-                className="lg:hidden text-card-foreground hover:bg-muted"
+                className="text-card-foreground hover:bg-muted"
               >
                 <Menu size={20} />
               </Button>
               
               <div className="flex items-center gap-2">
-                <h1 className="font-medium text-lg hidden md:block text-card-foreground">
+                <h1 className="font-medium text-lg hidden sm:block text-card-foreground">
                   {getPageTitle()}
                 </h1>
-                <ChevronRight size={16} className="text-muted-foreground hidden md:block" />
-                <div className="text-sm text-muted-foreground hidden md:block">Campus Wellness Beacon</div>
+                <ChevronRight size={16} className="text-muted-foreground hidden sm:block" />
+                <div className="text-sm text-muted-foreground hidden sm:block truncate max-w-[200px]">Campus Wellness Beacon</div>
               </div>
             </div>
             

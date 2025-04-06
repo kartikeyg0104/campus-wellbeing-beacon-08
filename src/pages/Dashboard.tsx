@@ -39,7 +39,7 @@ const Dashboard = () => {
     .slice(0, 3);
   
   return (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       <div className="md:col-span-2 lg:col-span-1 lg:row-span-2 space-y-6">
         <MoodTracker />
         
@@ -56,7 +56,7 @@ const Dashboard = () => {
         </Card>
       </div>
       
-      <Card className="lg:col-span-2">
+      <Card className="sm:col-span-1 md:col-span-2">
         <CardHeader className="pb-2">
           <CardTitle>Wellness Progress</CardTitle>
         </CardHeader>
@@ -70,7 +70,7 @@ const Dashboard = () => {
               <LevelProgressBar showDetail={true} className="w-full sm:w-64" />
             </div>
             
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-4 mt-2 sm:mt-0 justify-center sm:justify-start">
               <div className="flex flex-col items-center">
                 <span className="text-sm text-muted-foreground">Total XP</span>
                 <div className="flex items-center gap-1">
@@ -187,7 +187,7 @@ const Dashboard = () => {
         </CardContent>
       </Card>
       
-      <div className="lg:col-span-2">
+      <div className="sm:col-span-1 md:col-span-2">
         <WellnessRecommendations />
       </div>
     </div>

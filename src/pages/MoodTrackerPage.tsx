@@ -14,24 +14,24 @@ const MoodTrackerPage: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-foreground">Mood Tracker</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-foreground">Mood Tracker</h1>
         <p className="text-muted-foreground">
           Track, analyze, and understand your emotional patterns.
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2">
         <motion.div
-          initial={{ x: -20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
           className="bg-card border rounded-lg shadow-sm"
         >
           <MoodTracker />
         </motion.div>
         <motion.div
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
           className="bg-card border rounded-lg shadow-sm"
         >
