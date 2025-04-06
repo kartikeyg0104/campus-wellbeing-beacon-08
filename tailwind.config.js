@@ -146,6 +146,8 @@ module.exports = {
         'card': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
         'inner-glow': 'inset 0 0 5px rgba(var(--primary-rgb), 0.2)',
+        'contrast-light': '0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.1)',
+        'contrast-dark': '0 4px 6px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.2)',
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -155,6 +157,8 @@ module.exports = {
         'shimmer': 'linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%)',
         'card-gradient': 'linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%)',
         'dark-card-gradient': 'linear-gradient(145deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0) 100%)',
+        'high-contrast-light': 'linear-gradient(to bottom, rgba(255,255,255,1), rgba(240,240,240,1))',
+        'high-contrast-dark': 'linear-gradient(to bottom, rgba(30,30,30,1), rgba(20,20,20,1))',
       },
       backgroundSize: {
         'dots-sm': '20px 20px',

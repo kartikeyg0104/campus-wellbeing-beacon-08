@@ -14,7 +14,18 @@ import {
 } from '@/components/ui/card';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ArrowRight, Bell, Clock, Calendar, Brain, Heart, MessageSquare, Zap, TrendingUp } from 'lucide-react';
+import { 
+  ChevronRight, 
+  ArrowRight, 
+  Bell, 
+  Clock, 
+  Calendar, 
+  Brain, 
+  Heart, 
+  MessageSquare, 
+  Zap, 
+  TrendingUp 
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Link } from 'react-router-dom';
@@ -61,6 +72,13 @@ const Dashboard: React.FC = () => {
     return 'evening';
   }
 
+  // Format today's date for the heading
+  const today = new Date().toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+
   return (
     <motion.div 
       className="space-y-8"
@@ -95,7 +113,7 @@ const Dashboard: React.FC = () => {
               <ChevronRight size={16} className="ml-1" />
             </Link>
           </Button>
-          <Button className="shadow-soft transition-all hover:shadow-md hover:-translate-y-1 bg-gradient-to-r from-primary to-secondary" asChild>
+          <Button className="shadow-soft transition-all hover:shadow-md hover:-translate-y-1 bg-gradient-to-r from-primary to-secondary text-primary-foreground" asChild>
             <Link to="/app/mood">
               <Zap size={16} className="mr-1" />
               Track mood
@@ -109,18 +127,18 @@ const Dashboard: React.FC = () => {
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
         variants={itemVariants}
       >
-        <Card className="col-span-3 md:col-span-2 bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
+        <Card className="col-span-3 md:col-span-2 bg-card shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
           <CardHeader className="pb-2">
             <div className="flex justify-between items-start">
               <div>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-card-foreground">
                   Today's Overview
-                  <Badge variant="outline" className="ml-2 bg-primary/10 text-primary">
+                  <Badge variant="outline" className="ml-2 bg-primary/10 text-primary border-primary/20">
                     <Clock size={12} className="mr-1" /> 
                     Daily
                   </Badge>
                 </CardTitle>
-                <CardDescription>Your wellness stats for {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</CardDescription>
+                <CardDescription>Your wellness stats for {today}</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -133,7 +151,7 @@ const Dashboard: React.FC = () => {
                   score: "82%", 
                   change: "+3%", 
                   trend: "from last week", 
-                  color: "wellness-calm" 
+                  colorClass: "from-blue-500 to-blue-600 dark:from-blue-600 dark:to-blue-700" 
                 },
                 { 
                   title: "Habit Completion", 
@@ -141,7 +159,7 @@ const Dashboard: React.FC = () => {
                   score: "3/5", 
                   change: "60%", 
                   trend: "completed today", 
-                  color: "wellness-soothe" 
+                  colorClass: "from-teal-500 to-teal-600 dark:from-teal-600 dark:to-teal-700" 
                 },
                 { 
                   title: "Stress Level", 
@@ -149,7 +167,7 @@ const Dashboard: React.FC = () => {
                   score: "Low", 
                   change: "-12%", 
                   trend: "from yesterday", 
-                  color: "wellness-energize" 
+                  colorClass: "from-purple-500 to-purple-600 dark:from-purple-600 dark:to-purple-700" 
                 },
                 { 
                   title: "Upcoming", 
@@ -157,14 +175,14 @@ const Dashboard: React.FC = () => {
                   score: "2", 
                   change: "Events", 
                   trend: "this week", 
-                  color: "wellness-balance" 
+                  colorClass: "from-pink-500 to-pink-600 dark:from-pink-600 dark:to-pink-700" 
                 }
               ].map((item, index) => (
                 <motion.div
                   key={index}
                   className={cn(
                     "p-4 rounded-xl flex flex-col items-start justify-between h-32 overflow-hidden relative group",
-                    `bg-gradient-to-br from-${item.color} to-${item.color}/60 text-primary-foreground`
+                    `bg-gradient-to-br ${item.colorClass} text-white`
                   )}
                   whileHover={{ scale: 1.02, y: -5 }}
                   transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -188,13 +206,13 @@ const Dashboard: React.FC = () => {
             <div className="space-y-6">
               <div>
                 <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-sm font-medium flex items-center">
+                  <h3 className="text-sm font-medium flex items-center text-card-foreground">
                     <TrendingUp size={14} className="mr-1.5 text-primary" />
                     Weekly Mood Trend
                   </h3>
                   <span className="text-xs text-muted-foreground">Last 7 days</span>
                 </div>
-                <div className="h-32 relative">
+                <div className="h-32 relative bg-muted/30 rounded-lg p-2">
                   <div className="absolute inset-0 flex items-end justify-around">
                     {[35, 45, 70, 55, 80, 60, 75].map((value, i) => (
                       <motion.div 
@@ -226,7 +244,7 @@ const Dashboard: React.FC = () => {
               <div>
                 <div className="flex justify-between items-end mb-2">
                   <div>
-                    <h3 className="text-sm font-medium flex items-center">
+                    <h3 className="text-sm font-medium flex items-center text-card-foreground">
                       <Calendar size={14} className="mr-1.5 text-primary" />
                       April Goals Progress
                     </h3>
@@ -241,7 +259,7 @@ const Dashboard: React.FC = () => {
                   {[
                     { name: "Mindfulness meditation", progress: 60, color: "bg-primary" },
                     { name: "Daily exercise", progress: 45, color: "bg-secondary" },
-                    { name: "Journal entries", progress: 80, color: "bg-wellness-calm" }
+                    { name: "Journal entries", progress: 80, color: "bg-blue-500 dark:bg-blue-600" }
                   ].map((goal, index) => (
                     <motion.div 
                       key={index} 
@@ -251,8 +269,8 @@ const Dashboard: React.FC = () => {
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="flex justify-between text-xs">
-                        <span>{goal.name}</span>
-                        <span className="font-medium">{goal.progress}%</span>
+                        <span className="text-card-foreground">{goal.name}</span>
+                        <span className="font-medium text-card-foreground">{goal.progress}%</span>
                       </div>
                       <div className="relative h-2 w-full bg-muted rounded-full overflow-hidden">
                         <motion.div 
@@ -270,9 +288,9 @@ const Dashboard: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className="col-span-3 md:col-span-1 bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
+        <Card className="col-span-3 md:col-span-1 bg-card shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
           <CardHeader className="pb-3">
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle className="text-card-foreground">Quick Actions</CardTitle>
             <CardDescription>Easy access to wellness tools</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
@@ -297,7 +315,7 @@ const Dashboard: React.FC = () => {
                       <div className="bg-primary/10 p-2 rounded-full mb-2 text-primary">
                         <action.icon size={18} />
                       </div>
-                      <span className="text-xs">{action.title}</span>
+                      <span className="text-xs text-card-foreground">{action.title}</span>
                     </Link>
                   </Button>
                 </motion.div>
@@ -309,7 +327,7 @@ const Dashboard: React.FC = () => {
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <h3 className="font-medium text-sm mb-2 flex items-center">
+              <h3 className="font-medium text-sm mb-2 flex items-center text-card-foreground">
                 <Zap size={14} className="mr-1.5 text-primary" />
                 Wellness Tip
               </h3>
@@ -338,9 +356,9 @@ const Dashboard: React.FC = () => {
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
         variants={itemVariants}
       >
-        <Card className="col-span-3 md:col-span-2 bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
+        <Card className="col-span-3 md:col-span-2 bg-card shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
           <CardHeader>
-            <CardTitle>Wellness Stats</CardTitle>
+            <CardTitle className="text-card-foreground">Wellness Stats</CardTitle>
             <CardDescription>Your wellness journey at a glance</CardDescription>
           </CardHeader>
           <CardContent>
@@ -348,9 +366,9 @@ const Dashboard: React.FC = () => {
           </CardContent>
         </Card>
         
-        <Card className="col-span-3 md:col-span-1 bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
+        <Card className="col-span-3 md:col-span-1 bg-card shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
           <CardHeader>
-            <CardTitle>Daily Habits</CardTitle>
+            <CardTitle className="text-card-foreground">Daily Habits</CardTitle>
             <CardDescription>Track your wellness routines</CardDescription>
           </CardHeader>
           <CardContent>
@@ -360,9 +378,9 @@ const Dashboard: React.FC = () => {
       </motion.div>
       
       <motion.div variants={itemVariants}>
-        <Card className="bg-white/50 dark:bg-gray-900/50 shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
+        <Card className="bg-card shadow-soft border backdrop-blur-sm hover:shadow-md transition-all duration-300">
           <CardHeader>
-            <CardTitle>Personalized Recommendations</CardTitle>
+            <CardTitle className="text-card-foreground">Personalized Recommendations</CardTitle>
             <CardDescription>Based on your wellness patterns</CardDescription>
           </CardHeader>
           <CardContent>
