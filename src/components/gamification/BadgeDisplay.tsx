@@ -130,8 +130,7 @@ export const BadgeDisplay: React.FC<BadgeDisplayProps> = ({
             <div className="w-full mt-1">
               <Progress 
                 value={progressPercent} 
-                className="h-1 w-12" 
-                indicatorClassName={styles.progressColor}
+                className={cn("h-1 w-12", styles.progressColor)}
               />
             </div>
           )}
